@@ -1,0 +1,51 @@
+<?php
+
+class Vue{
+
+    public function __construct(){
+    }
+
+    public function menu(){
+        echo '<a href="index.php?action=formInscription"> Inscription </a> |';
+        echo '<a href="index.php?action=formConnexion"> Connexion </a> |';
+        echo '<a href="index.php?"> Deconnexion </a><br>';
+    }
+
+    public function form_inscription(){
+        echo '
+            <h2>Inscription</h2>
+            <form method = "POST" action = "index.php?action=inscription">
+                <label>Login :</label> <br>
+                <input type = "text" name= "login"><br>
+    
+                <label>Mot de passe :</label><br>
+                <input type = "text" name= "mdp"> <br>
+    
+                <input type = "submit" value="Valider">
+            </form>
+        ';
+    }
+
+    public function form_connexion(){
+        echo '
+            <h2>Connexion</h2>
+            <form method = "POST" action = "index.php?action=connexion">
+                <label>Login :</label> <br>
+                <input type = "text" name= "login"><br>
+    
+                <label>Mot de passe :</label><br>
+                <input type = "text" name= "mdp"> <br>
+    
+                <input type = "submit" value="Connecter">
+            </form>
+        ';
+    }
+    public function messageBienvenue(){
+?>      <h1>Bienvenue</h1>
+        <h2>HEHEHA</h2>
+
+<?php
+    }
+}
+
+?>

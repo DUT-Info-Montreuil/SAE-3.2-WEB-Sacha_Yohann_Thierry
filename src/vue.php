@@ -16,7 +16,7 @@ class Vue{
             <h2>Inscription</h2>
             <form method = "POST" action = "index.php?action=inscription">
                 <label>Login :</label> <br>
-                <input type = "text" name= "login"><br>
+                <input type = "text" name= "nom_utilisateur"><br>
     
                 <label>Mot de passe :</label><br>
                 <input type = "text" name= "mdp"> <br>
@@ -31,7 +31,7 @@ class Vue{
             <h2>Connexion</h2>
             <form method = "POST" action = "index.php?action=connexion">
                 <label>Login :</label> <br>
-                <input type = "text" name= "login"><br>
+                <input type = "text" name= "nom_utilisateur"><br>
     
                 <label>Mot de passe :</label><br>
                 <input type = "text" name= "mdp"> <br>

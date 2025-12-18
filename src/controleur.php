@@ -23,8 +23,9 @@ class Controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
+                break;
             case "connexion":
-
+                $this->modele->connexion();
             case "default":
                 $this->vue->messageBienvenue();
                 $this->vue->menu();

@@ -40,11 +40,9 @@ class Vue{
             </form>
         ';
     }
-    public function messageBienvenue(){
-?>      <h1>Bienvenue</h1>
-        <h2>HEHEHA</h2>
 
-<?php
+    public function messageBienvenue(){
+        echo '<h1>Bienvenue sur le site</h1>';
     }
 }
 

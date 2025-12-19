@@ -20,9 +20,9 @@ class Modele extends Connexion {
 
         if ($veriflogin && $verifmdp){
             $_SESSION['nom_utilisateur'] = $login;
-            echo 'vous êtes connecter';
+            echo 'Vous êtes connecté';
         }else {
-            echo "le login ou le mot de passe n'est pas correcte !";
+            echo "Le login ou le mot de passe n'est pas correct !";
         }
 
     }

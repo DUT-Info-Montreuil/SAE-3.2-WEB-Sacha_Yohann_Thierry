@@ -6,9 +6,12 @@ class Vue{
     }
 
     public function menu(){
-        echo '<a href="index.php?action=formInscription"> Inscription </a> |';
-        echo '<a href="index.php?action=formConnexion"> Connexion </a> |';
-        echo '<a href="index.php?"> Deconnexion </a><br>';
+        if(!isset($_SESSION['nom_utilisateur'])){
+            echo '<a href="index.php?action=formInscription"> Inscription </a> |';
+            echo '<a href="index.php?action=formConnexion"> Connexion </a>';
+        } else {
+            echo '<a href="index.php?"> Deconnexion </a><br>';
+        }
     }
 
     public function form_inscription(){

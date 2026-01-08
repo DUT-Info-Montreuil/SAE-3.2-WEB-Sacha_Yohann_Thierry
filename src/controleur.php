@@ -23,6 +23,7 @@ class Controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
+                echo '<a href="index.php?action=formConnexion"> Connexion </a>';
                 break;
             case "connexion":
                 $this->modele->connexion();

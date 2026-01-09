@@ -6,3 +6,5 @@ class gestion_vue
 {
 
 }
+
+?>

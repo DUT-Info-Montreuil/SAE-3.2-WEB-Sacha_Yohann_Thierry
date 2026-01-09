@@ -6,3 +6,5 @@ class buvette_module
 {
 
 }
+
+?>

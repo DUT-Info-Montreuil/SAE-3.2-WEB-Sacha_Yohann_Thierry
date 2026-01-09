@@ -2,7 +2,9 @@
 
 namespace Mod_Stockage;
 
-class stockage_vue
+class inventaire_vue
 {
 
 }
+
+?>

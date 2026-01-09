@@ -1,6 +1,6 @@
 <?php
-include_once "modele.php";
-include_once "vue.php";
+include_once "connexion_modele.php";
+include_once "connexion_vue.php";
 class Controleur {
 
     private $modele;
@@ -23,7 +23,6 @@ class Controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
-                echo '<a href="index.php?action=formConnexion"> Connexion </a>';
                 break;
             case "connexion":
                 $this->modele->connexion();

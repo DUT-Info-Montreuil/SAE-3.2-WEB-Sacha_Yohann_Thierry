@@ -7,7 +7,8 @@ class Modele extends Connexion {
     public function inscription(){
         $login = $_POST['nom_utilisateur'];
         $mdp = $_POST['mdp'];
-        $this->insertDataUser($login,$mdp);
+        $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
+        $this->insertDataUser($login,$hashMdp);
 
     }
 
@@ -15,14 +16,15 @@ class Modele extends Connexion {
         $login = $_POST['nom_utilisateur'];
         $mdp = $_POST['mdp'];
 
-        $veriflogin = $this->recupLogin($login);
-        $verifmdp = $this->recupMdp($mdp);
+        $sql = self::$bdd->prepare('SELECT * FROM Utilisateur WHERE nom_utilisateur = ?');
+        $sql->execute([$login]);
+        $user = $sql->fetch(PDO::FETCH_ASSOC);
 
-        if ($veriflogin && $verifmdp){
+        if ($user && password_verify($mdp, $user['mdp'])) {
             $_SESSION['nom_utilisateur'] = $login;
             echo 'Vous êtes connecté';
-        }else {
-            echo "Le login ou le mot de passe n'est pas correct !";
+        } else {
+            echo "Problème lors de la connexion: Le login ou le mot de passe n'est pas correct !";
         }
 
     }

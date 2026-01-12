@@ -1,9 +1,7 @@
 <?php
 
-namespace Mod_Stockage;
 
-class inventaire_module
-{
+class inventaire_module{
 
 }
 

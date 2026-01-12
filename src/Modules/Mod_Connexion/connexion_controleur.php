@@ -1,15 +1,15 @@
 <?php
 include_once "connexion_modele.php";
 include_once "connexion_vue.php";
-class Controleur {
+class connexion_controleur {
 
     private $modele;
     private $vue;
     private $action;
 
     public function __construct(){
-        $this->modele = new Modele();
-        $this->vue = new Vue();
+        $this->modele = new connexion_modele();
+        $this->vue = new connexion_vue();
         $this->action = isset($_GET["action"]) ? $_GET["action"]: "default";
     }
 
@@ -26,6 +26,7 @@ class Controleur {
                 break;
             case "connexion":
                 $this->modele->connexion();
+                break;
             case "default":
                 $this->vue->messageBienvenue();
                 $this->vue->menu();

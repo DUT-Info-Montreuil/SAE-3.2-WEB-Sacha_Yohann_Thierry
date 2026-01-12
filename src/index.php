@@ -12,6 +12,6 @@ $inventaire = new inventaire_controleur();
 
 $connexion->initConnexion();
 $controleur->exec();
-$inventaire->afficherInventaire();
+$inventaire->exec();
 
 

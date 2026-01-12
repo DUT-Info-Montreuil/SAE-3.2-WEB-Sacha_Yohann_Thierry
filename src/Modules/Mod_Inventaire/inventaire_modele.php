@@ -9,9 +9,7 @@ class inventaire_modele extends \Connexion {
     }
 
     public function recupProduitParId($idProduit){
-        $sql = self::$bdd->prepare(
-            'SELECT * FROM Produit WHERE idProduit = ?'
-        );
+        $sql = self::$bdd->prepare('SELECT * FROM Produit WHERE idProduit = ?');
         $sql->execute([$idProduit]);
         return $sql->fetch();
     }
@@ -21,6 +19,11 @@ class inventaire_modele extends \Connexion {
         return $sql->fetchAll();
     }
 
+     public function afficherInventaire(){
+            $produits = $this->modele->recupTousProduits();
+
+            $this->vue->form_inventaire($produits);
+     }
 }
 
 ?>

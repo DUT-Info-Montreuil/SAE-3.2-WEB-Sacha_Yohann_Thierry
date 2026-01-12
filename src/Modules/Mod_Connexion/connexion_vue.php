@@ -7,6 +7,7 @@ class connexion_vue{
 
     public function menu(){
         if(!isset($_SESSION['login'])){
+            echo '<h1>Bienvenue sur le site</h1>';
             echo '<a href="index.php?action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?action=formConnexion"> Connexion </a>';
         } else {
@@ -19,19 +20,19 @@ class connexion_vue{
             <h2>Inscription</h2>
             <form method = "POST" action = "index.php?action=inscription">
                 <label>Prénom :</label> <br>
-                <input type = "text" name= "prenom" placeholder="Enter votre prénom"><br>
+                <input type = "text" name= "prenom" placeholder="Entrez votre prénom"><br>
 
                 <label>Nom :</label> <br>
-                <input type = "text" name= "nom" placeholder="Enter votre nom"> <br>
+                <input type = "text" name= "nom" placeholder="Entrez votre nom"> <br>
                 
                 <label>Adresse mail :</label> <br>
-                <input type = "text" name= "email" placeholder="Enter une adresse mail"> <br>
+                <input type = "text" name= "email" placeholder="Entrez une adresse mail"> <br>
             
                 <label>Login :</label> <br>
-                <input type = "text" name= "login" placeholder="Enter votre pseudonyme"><br>
+                <input type = "text" name= "login" placeholder="Entrez votre pseudonyme"><br>
     
                 <label>Mot de passe :</label><br>
-                <input type = "text" name= "mdp" placeholder="Enter votre un mot de passe"> <br>
+                <input type = "text" name= "mdp" placeholder="Entrez votre un mot de passe"> <br>
     
                 <input type = "submit" value="Valider">
             </form>
@@ -51,10 +52,6 @@ class connexion_vue{
                 <input type = "submit" value="Connecter">
             </form>
         ';
-    }
-
-    public function messageBienvenue(){
-        echo '<h1>Bienvenue sur le site</h1>';
     }
 }
 

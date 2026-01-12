@@ -23,12 +23,12 @@ class connexion_controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
+                $this->vue->menu();
                 break;
             case "connexion":
                 $this->modele->connexion();
                 break;
             case "default":
-                $this->vue->messageBienvenue();
                 $this->vue->menu();
                 break;
         }

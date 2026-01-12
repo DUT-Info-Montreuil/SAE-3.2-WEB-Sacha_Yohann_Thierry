@@ -7,7 +7,7 @@ class buvette_vue{
     public function __construct(){
     }
 
-    public function menu(){
+    public function choixBuvette(){
 
     }
 

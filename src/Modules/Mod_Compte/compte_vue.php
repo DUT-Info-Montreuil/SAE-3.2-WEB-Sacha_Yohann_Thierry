@@ -1,16 +1,11 @@
 <?php
 
-namespace Mod_Compte;
-
 class compte_vue{
     public function __construct(){
 
     }
-
-    public function menu(){
-        echo '
-            <h3>Votre solde</h3>
-            
-        ';
+    public function solde(){
+        echo "<p>Bonjour " . htmlspecialchars($_SESSION['login']) . " !</p>";
+        echo "<p>Votre solde actuel : " . htmlspecialchars($_SESSION['solde']) . " €</p>";
     }
 }

@@ -4,9 +4,14 @@ session_start();
 
 require_once ("Modules/Mod_Connexion/connexion_controleur.php");
 require_once("Modules/Mod_Inventaire/inventaire_controleur.php");
+require_once ("Modules/Mod_Compte/compte_controleur.php");
 require_once ("connexion.php");
+
 $connexion = new Connexion();
 $connexion->initConnexion();
+
+$compte = new compte_controleur();
+$compte->exec();
 
 $action = isset($_GET['module']) ? $_GET['module'] : 'connexion';
 

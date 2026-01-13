@@ -48,7 +48,7 @@ class connexion_vue{
                 <input type = "text" name= "login"><br>
     
                 <label>Mot de passe :</label><br>
-                <input type = "text" name= "mdp"> <br>
+                <input type = "password" name= "mdp"> <br>
     
                 <input type = "submit" value="Connecter">
             </form>

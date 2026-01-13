@@ -32,6 +32,7 @@ class connexion_modele extends Connexion {
             header('Location: index.php');
         } else {
             echo "Problème lors de la connexion: Le login ou le mot de passe n'est pas correct !";
+            echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         }
 
     }

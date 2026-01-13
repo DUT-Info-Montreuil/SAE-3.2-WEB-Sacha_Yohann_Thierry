@@ -27,6 +27,10 @@ class connexion_controleur {
             case "connexion":
                 $this->modele->connexion();
                 break;
+            case "deconnexion":
+                session_destroy();
+                header('Location: index.php');
+                exit;
             case "default":
                 $this->vue->messageBienvenue();
                 $this->vue->menu();

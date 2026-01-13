@@ -11,11 +11,11 @@ class connexion_modele extends Connexion {
         $email = $_POST['email'];
         $login = $_POST['login'];
         $mdp = $_POST['mdp'];
-        $verifMdp = $_POST['verifmdp'];
         $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
         $idUtilisateur = $this->insertDataUtilisateur($nom,$prenom,$email);
         $this -> insertDataCompte($login,$hashMdp,$idUtilisateur);
+        header('Location: index.php');
 
     }
 
@@ -29,7 +29,7 @@ class connexion_modele extends Connexion {
 
         if ($user && password_verify($mdp, $user['mot_de_passe'])) {
             $_SESSION['login'] = $login;
-            echo 'Vous êtes connecté';
+            header('Location: index.php');
         } else {
             echo "Problème lors de la connexion: Le login ou le mot de passe n'est pas correct !";
         }
@@ -41,7 +41,6 @@ class connexion_modele extends Connexion {
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
         if ($result['nbDeCompte'] == 0) {
-            // Réinitialiser AUTO_INCREMENT à 1
             self::$bdd->exec('ALTER TABLE Compte AUTO_INCREMENT = 1');
         }
         $solde = 0;
@@ -68,7 +67,6 @@ class connexion_modele extends Connexion {
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
         if ($result['nbUtilisateur'] == 0) {
-            // Réinitialiser AUTO_INCREMENT à 1
             self::$bdd->exec('ALTER TABLE Utilisateur AUTO_INCREMENT = 1');
         }
 

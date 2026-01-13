@@ -11,7 +11,9 @@ class connexion_vue{
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {
             echo '<a href="index.php?action=deconnexion"> Deconnexion </a><br>';
-        }
+            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong> | ';
+            echo '<a href="index.php?action=afficherInventaire"> Inventaire </a> | ';
+
     }
 
     public function form_inscription(){

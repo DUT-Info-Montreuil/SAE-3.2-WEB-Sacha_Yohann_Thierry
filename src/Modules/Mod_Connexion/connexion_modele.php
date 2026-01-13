@@ -11,6 +11,7 @@ class connexion_modele extends Connexion {
         $email = $_POST['email'];
         $login = $_POST['login'];
         $mdp = $_POST['mdp'];
+        $verifMdp = $_POST['verifmdp'];
         $hashMdp = password_hash($mdp, PASSWORD_DEFAULT);
 
         $idUtilisateur = $this->insertDataUtilisateur($nom,$prenom,$email);

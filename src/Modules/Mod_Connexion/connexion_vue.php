@@ -31,7 +31,7 @@ class connexion_vue{
                 <input type = "text" name= "login" placeholder="Enter votre pseudonyme"><br>
     
                 <label>Mot de passe :</label><br>
-                <input type = "text" name= "mdp" placeholder="Enter votre un mot de passe"> <br>
+                <input type = "password" name= "mdp" placeholder="Enter votre un mot de passe"> <br>
     
                 <input type = "submit" value="Valider">
             </form>

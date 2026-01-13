@@ -16,14 +16,14 @@ class inventaire_modele extends \Connexion {
 
     public function recupTousProduits(){
         $sql = self::$bdd->query('SELECT * FROM Produit');
-        return $sql->fetchAll();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
-
+/*
      public function afficherInventaire(){
-            $produits = $this->modele->recupTousProduits();
-
-            $this->vue->form_inventaire($produits);
+        $produits = $this->modele->recupTousProduits();
+        $this->vue->form_inventaire($produits);
      }
+ */
 }
 
 ?>

@@ -10,6 +10,8 @@ class connexion_vue{
             echo '<a href="index.php?action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?action=formConnexion"> Connexion </a>';
         } else {
+            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong> | ';
+            echo '<a href="index.php?action=afficherInventaire"> Inventaire </a> | ';
             echo '<a href="index.php?"> Deconnexion </a><br>';
         }
     }

@@ -6,6 +6,7 @@ class inventaire_controleur{
 
     private $vue;
     private $modele;
+    private $action;
 
     public function __construct(){
         $this->modele = new inventaire_modele();
@@ -14,13 +15,13 @@ class inventaire_controleur{
     }
 
     public function exec(){
-        switch($this->action){
-            case"afficherInventaire";
-                $this->modele->afficherInventaire();
-                break;
-            case "default":
-               $this->vue->inventaire_affichage();
-               break;
+        if (isset($_SESSION['login'])) {
+            switch($this->action){
+                case"afficherInventaire";
+                    $produits = $this->modele->recupTousProduits();
+                    $this->vue->form_inventaire($produits);
+                    break;
+            }
         }
     }
 }

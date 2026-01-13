@@ -16,7 +16,7 @@ class buvette_controleur
     }
 
     public function exec(){
-
+        $this->vue->choixBuvette($this->modele->getNomBuvettes());
     }
 }
 

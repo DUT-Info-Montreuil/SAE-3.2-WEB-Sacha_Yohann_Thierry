@@ -23,6 +23,7 @@ class connexion_controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
+                $this->vue->menu();
                 break;
             case "connexion":
                 $this->modele->connexion();
@@ -32,7 +33,6 @@ class connexion_controleur {
                 header('Location: index.php');
                 exit;
             case "default":
-                $this->vue->messageBienvenue();
                 $this->vue->menu();
                 break;
         }

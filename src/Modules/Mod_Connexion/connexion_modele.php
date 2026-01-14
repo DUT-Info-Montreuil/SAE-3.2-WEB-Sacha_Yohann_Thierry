@@ -72,7 +72,7 @@ class connexion_modele extends Connexion {
         }
 
         $requete = self::$bdd->prepare('INSERT INTO Utilisateur(nom,prenom,adresse_mail) VALUES (?,?,?)');
-        $requete -> execute([$nom,$prenom,$email]);
+        $requete->execute([$nom,$prenom,$email]);
         return self::$bdd->lastInsertId();
     }
 

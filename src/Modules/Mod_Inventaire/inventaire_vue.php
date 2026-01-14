@@ -16,8 +16,9 @@ class inventaire_vue{
 
         foreach ($produits as $produit) {
             echo '<div style="border: 1px solid #ccc; margin: 5px; padding: 5px;">
-                    <strong>' . htmlspecialchars($produit['nom']) . '</strong>
-                    - Prix : ' . htmlspecialchars($produit['prix']) . ' €
+                    <strong>' . $produit['nom'] . '</strong>
+                    - Prix : ' . $produit['prix'] . ' €
+                    - Quantite : ' . $produit['quantite'] . '
                   </div>';
         }
     }

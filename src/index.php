@@ -5,16 +5,20 @@ session_start();
 require_once ("connexion.php");
 
 $connexion = new Connexion();
-$inventaire = new inventaire_controleur();
 
 
 $connexion->initConnexion();
 
-switch(isset($_GET["action"]) ? $_GET["action"]: "default"){
-    case 'connexion' :
+switch(isset($_GET["module"]) ? $_GET["module"]: "default"){
+    case 'buvette' :
         include_once ("Modules/Mod_Buvette/buvette_controleur.php");
         $controleur = new buvette_controleur();
         $controleur->exec();
+        break;
+    case 'inventaire' :
+        include_once ("Modules/Mod_Inventaire/inventaire_controleur.php");
+        $inventaire = new inventaire_controleur();
+        $inventaire->exec();
         break;
     default :
         include_once ("Modules/Mod_Connexion/connexion_controleur.php");
@@ -23,13 +27,5 @@ switch(isset($_GET["action"]) ? $_GET["action"]: "default"){
         break;
 }
 
-/*$controleur = new connexion_controleur();
-
-$inventaire = new inventaire_controleur();
-
-
-
-$controleur->exec();
-$inventaire->afficherInventaire();*/
 
 

@@ -9,7 +9,7 @@ class buvette_vue{
         echo '<h2>Choisissez une buvette</h2>';
         echo '<ul>';
         foreach($buvettes as $buvette){
-            echo '<li><a href="details_buvette.php?id=' . $buvette['id'] . '">' . $buvette['nom'] . '</a></li>';
+            echo '<li><a href="index.php?&module=inventaire&id=' . $buvette['id'] . '">' . $buvette['nom'] . '</a></li>';
         }
         echo '</ul>';
     }

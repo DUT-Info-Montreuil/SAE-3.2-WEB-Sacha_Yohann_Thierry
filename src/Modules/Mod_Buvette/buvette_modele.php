@@ -8,7 +8,7 @@ class buvette_modele extends Connexion{
     }
 
     public function getNomBuvettes(){
-        $sql = self::$bdd->prepare('SELECT * FROM buvette');
+        $sql = self::$bdd->prepare('SELECT * FROM Buvette');
         $sql->execute();
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }

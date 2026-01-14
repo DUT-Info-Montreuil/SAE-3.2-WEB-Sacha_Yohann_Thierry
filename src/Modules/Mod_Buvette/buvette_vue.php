@@ -12,6 +12,12 @@ class buvette_vue{
         foreach ($buvettes as $buvette) {
             echo '<p>' . htmlspecialchars($buvette['nom']) . '</p>';
         }
+    public function choixBuvette($buvettes){
+        echo '<ul>';
+        foreach($buvettes as $buvette){
+            echo '<li><a href="details_buvette.php?id=' . $buvette['id'] . '">' . $buvette['nom'] . '</a></li>';
+        }
+        echo '</ul>';
     }
 
 }

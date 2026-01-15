@@ -11,8 +11,8 @@ class compte_controleur{
 
 
     public function __construct(){
-        $this -> vue_compte = new compte_vue();
-        $this ->modele_compte = new compte_modele();
+        $this->vue_compte = new compte_vue();
+        $this->modele_compte = new compte_modele();
         $this->action = isset($_GET["action"]) ? $_GET["action"]: "default";
     }
 
@@ -23,12 +23,10 @@ class compte_controleur{
                     $this->vue_compte->solde();
                     break;
                 case "recharger";
-                    $this -> vue_compte->form_recharge_compte();
+                    $this->vue_compte->form_recharge_compte();
                     break;
                 case "formRecharger";
                     $this->modele_compte->recharger();
-                    break;
-                case "default":
                     break;
             }
         }

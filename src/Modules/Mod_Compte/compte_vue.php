@@ -13,7 +13,7 @@ class compte_vue{
         echo '
             <h2>Rechargement</h2>
 
-            <form method="POST" action="index.php?action=formRecharger">
+            <form method="POST" action="index.php?module=compte&action=formRecharger">
                 <label>Montant</label><br>
                 <input type="number" id="montantFinal" name="montantFinal" min="1" value="0" onclick="valeurnullpardefaut()" placeholder="0">
             
@@ -46,7 +46,7 @@ class compte_vue{
             <script>
             function retirer(valeur) {
                 let champ = document.getElementById("montantFinal");
-                if (champ.value  <= 0) {
+                if (champ.value  <= 0 || parseInt(champ.value) - valeur <= 0) {
                     champ.value = 0;
                 } else {
                     champ.value = parseInt(champ.value) - valeur;

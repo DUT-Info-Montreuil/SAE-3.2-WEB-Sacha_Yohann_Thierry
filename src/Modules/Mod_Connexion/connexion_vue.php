@@ -5,17 +5,17 @@ class connexion_vue{
     public function __construct(){
     }
 
+    public function messageBienvenue(){
+        echo '<h1>Bienvenue sur le site</h1>';
+    }
+
     public function menu(){
         if(!isset($_SESSION['login'])){
             echo '<a href="index.php?module=connexion&action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {
             echo '<a href="index.php?action=deconnexion"> Deconnexion </a><br>';
-            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong> | ';
-            echo '<a href="index.php?action=afficherInventaire"> Inventaire </a> | ';
-            echo '<a href="index.php?action=solde"> Voir mon solde </a><br>';
-            echo '<a href="index.php?action=recharger"> recharger mon compte </a>';
-
+            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong>';
         }
     }
 
@@ -48,18 +48,14 @@ class connexion_vue{
             <h2>Connexion</h2>
             <form method = "POST" action = "index.php?module=buvette&action=choixbuvette">
                 <label>Login :</label> <br>
-                <input type = "text" name= "login"><br>
+                <input type = "text" name= "login" required><br>
     
                 <label>Mot de passe :</label><br>
-                <input type = "password" name= "mdp"> <br>
+                <input type = "password" name= "mdp" required> <br>
     
                 <input type = "submit" value="Connecter">
             </form>
         ';
-    }
-
-    public function messageBienvenue(){
-        echo '<h1>Bienvenue sur le site</h1>';
     }
 }
 

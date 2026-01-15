@@ -24,6 +24,12 @@ class buvette_modele extends Connexion{
         $sql->execute([$idBuvette]);
         return $sql->fetch(PDO::FETCH_COLUMN);
     }
+
+    public function getIdCompteEtSolde($login) {
+        $sql = self::$bdd->prepare("SELECT id_utilisateur, solde FROM Compte WHERE login = (?)");
+        $sql->execute([$login]);
+        return $sql->fetch();
+    }
 }
 
 ?>

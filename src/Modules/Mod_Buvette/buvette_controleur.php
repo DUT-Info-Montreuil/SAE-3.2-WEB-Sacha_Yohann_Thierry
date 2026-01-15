@@ -17,11 +17,16 @@ class buvette_controleur{
     public function exec(){
         switch($this->action){
             case "choixbuvette" :
+                $_SESSION['login'] = $_POST['login'];
+
                 $this->vue->choixBuvette($this->modele->getNomBuvettes());
                 break;
             case "carte" :
-                $this->vue->carte($this->modele->recupProduits($_GET["id"]));
-                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_GET["id"]));
+                $login = $_SESSION['login'];
+                $_SESSION['idBuvette'] = $_GET['id'];
+                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($login));
+                $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
+                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
                 break;
         }
     }

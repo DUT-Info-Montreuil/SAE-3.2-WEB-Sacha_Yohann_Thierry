@@ -31,7 +31,12 @@ class buvette_vue{
     }
 
     public function boutonInventaire($idInventaire){
-        echo '<li><a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a></li>';
+        echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a>';
+    }
+
+    public function afficherEtRechargerSolde($idCompteEtSolde){
+        echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
+        echo '<a href="index.php?module=compte&action=recharger&id=' . $idCompteEtSolde['id_utilisateur'] . '">Recharger mon solde</a>';
     }
 }
 

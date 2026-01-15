@@ -6,23 +6,22 @@ class compte_modele extends Connexion {
     }
 
     public function recharger(){
-        if (!isset($_SESSION['id_utilisateur'])) {
+        if (!isset($_SESSION['login'])) {
             return;
         }
-        $idUtilisateur = $_SESSION['id_utilisateur'];
+        $login = $_SESSION['login'];
         $montant = intval($_POST['montantFinal']);
 
         if ($montant > 0) {
-            $this->ajouterSolde($idUtilisateur, $montant);
-            $_SESSION['solde'] += $montant;
+            $this->ajouterSolde($login, $montant);
         }
 
-        header("Location: index.php");
+        header("Location: index.php?module=buvette&action=carte&id=" . $_SESSION['idBuvette']);
         exit;
     }
 
-    public function ajouterSolde($idUtilisateur, $montant){
-        $sql = self::$bdd->prepare('UPDATE Compte SET solde = solde + ? WHERE id_utilisateur = ?');
-        $sql->execute([$montant, $idUtilisateur]);
+    public function ajouterSolde($login, $montant){
+        $sql = self::$bdd->prepare('UPDATE Compte SET solde = solde + ? WHERE login = ?');
+        $sql->execute([$montant, $login]);
     }
 }

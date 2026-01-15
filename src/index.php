@@ -4,8 +4,6 @@ session_start();
 
 require_once ("connexion.php");
 
-
-
 $connexion = new Connexion();
 $connexion->initConnexion();
 

@@ -28,6 +28,7 @@ class buvette_vue{
                     - Prix : ' . $produit['prix'] . ' €
                   </div>';
         }
+        echo '<a href="index.php?module=connexion&action=deconnexion"> Deconnexion </a><br>';
     }
 
     public function boutonInventaire($idInventaire){

@@ -10,11 +10,11 @@ class connexion_vue{
     }
 
     public function menu(){
-        if(!isset($_SESSION['login'])){
+        if(empty($_SESSION['login'])){
             echo '<a href="index.php?module=connexion&action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {
-            echo '<a href="index.php?action=deconnexion"> Deconnexion </a><br>';
+            echo '<a href="index.php?module=connexion&action=deconnexion"> Deconnexion </a><br>';
             echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong>';
         }
     }

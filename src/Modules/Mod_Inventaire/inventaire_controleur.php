@@ -7,13 +7,11 @@ class inventaire_controleur{
     private $vue;
     private $modele;
     private $action;
-    private $idBuvette;
 
     public function __construct(){
         $this->modele = new inventaire_modele();
         $this->vue = new inventaire_vue();
         $this->action = isset($_GET["action"]) ? $_GET["action"]: "afficherInventaire";
-        $this->idBuvette = isset($_GET["id"]) ? $_GET["id"]: "1";
     }
 
     public function exec(){
@@ -21,7 +19,7 @@ class inventaire_controleur{
             switch($this->action){
                 case"afficherInventaire";
                     //$produits = $this->modele->recupProduitsParBuvette($idBuvette);
-                    $this->vue->form_inventaire($this->modele->recupProduitParBuvette($this->idBuvette));
+                    $this->vue->form_inventaire($this->modele->recupProduitParBuvette($_GET['id']));
                     break;
             }
         //}

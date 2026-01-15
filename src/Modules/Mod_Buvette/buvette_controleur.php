@@ -14,16 +14,16 @@ class buvette_controleur{
         $this->action = isset($_GET["action"]) ? $_GET["action"]: "default";
     }
 
-    public function afficherBuvettes(){
-        session_start();
-    }
-
     public function exec(){
-        /*if (!isset($_SESSION['login'])) {
-            header('Location: index.php?action=form_connexion');
-            exit;
-        }*/
-        $this->vue->choixBuvette($this->modele->getNomBuvettes());
+        switch($this->action){
+            case "choixbuvette" :
+                $this->vue->choixBuvette($this->modele->getNomBuvettes());
+                break;
+            case "carte" :
+                $this->vue->carte($this->modele->recupProduits($_GET["id"]));
+                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_GET["id"]));
+                break;
+        }
     }
 }
 

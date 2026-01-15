@@ -5,11 +5,11 @@ session_start();
 require_once ("connexion.php");
 
 $connexion = new Connexion();
-
-
 $connexion->initConnexion();
 
-switch(isset($_GET["module"]) ? $_GET["module"]: "default"){
+$module = isset($_GET["module"]) ? $_GET["module"]: "default";
+
+switch($module){
     case 'buvette' :
         include_once ("Modules/Mod_Buvette/buvette_controleur.php");
         $controleur = new buvette_controleur();

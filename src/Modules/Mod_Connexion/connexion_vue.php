@@ -43,7 +43,7 @@ class connexion_vue{
     public function form_connexion(){
         echo '
             <h2>Connexion</h2>
-            <form method = "POST" action = "index.php?module=buvette">
+            <form method = "POST" action = "index.php?module=buvette&action=choixbuvette">
                 <label>Login :</label> <br>
                 <input type = "text" name= "login"><br>
     

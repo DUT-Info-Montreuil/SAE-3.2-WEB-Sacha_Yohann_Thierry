@@ -2,21 +2,23 @@
 include_once "connexion.php";
 
 class compte_modele extends Connexion {
-    public static $bdd;
-
     public function __construct(){
     }
 
-    public function connexionCompte($login, $mdp){
-        $sql = self::$bdd->prepare('SELECT * FROM Compte WHERE login = ?');
-        $sql->execute([$login]);
-        $user = $sql->fetch(PDO::FETCH_ASSOC);
+    public function recharger(){
+        if (!isset($_SESSION['id_utilisateur'])) {
+            return;
+        }
+        $idUtilisateur = $_SESSION['id_utilisateur'];
+        $montant = intval($_POST['montantFinal']);
 
-        if ($user && password_verify($mdp, $user['mot_de_passe'])) {
-            return $user;
+        if ($montant > 0) {
+            $this->ajouterSolde($idUtilisateur, $montant);
+            $_SESSION['solde'] += $montant;
         }
 
-        return false;
+        header("Location: index.php");
+        exit;
     }
 
     public function ajouterSolde($idUtilisateur, $montant){

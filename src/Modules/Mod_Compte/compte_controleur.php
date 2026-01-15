@@ -22,12 +22,19 @@ class compte_controleur{
                 case "solde";
                     $this->vue_compte->solde();
                     break;
+                case "recharger";
+                    $this -> vue_compte->form_recharge_compte();
+                    break;
+                case "formRecharger";
+                    $this->modele_compte->recharger();
+                    break;
                 case "default":
-                    echo 'bjr';
                     break;
             }
         }
 
     }
+
+
 
 }

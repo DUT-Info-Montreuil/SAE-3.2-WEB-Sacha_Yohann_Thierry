@@ -8,19 +8,22 @@ class inventaire_modele extends \Connexion {
 
     }
 
-    public function recupProduitParId($idProduit){
-        $sql = self::$bdd->prepare(
-            'SELECT * FROM Produit WHERE idProduit = ?'
-        );
-        $sql->execute([$idProduit]);
-        return $sql->fetch();
+    public function recupProduitParBuvette($idBuvette){
+        $sql = self::$bdd->prepare('SELECT nom, prix, quantite FROM Stock INNER JOIN Produit ON id_produit = id WHERE id_inventaire = ?');
+        $sql->execute([$idBuvette]);
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function recupTousProduits(){
         $sql = self::$bdd->query('SELECT * FROM Produit');
-        return $sql->fetchAll();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
-
+/*
+     public function afficherInventaire(){
+        $produits = $this->modele->recupTousProduits();
+        $this->vue->form_inventaire($produits);
+     }
+ */
 }
 
 ?>

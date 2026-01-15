@@ -11,6 +11,8 @@ class connexion_vue{
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {
             echo '<a href="index.php?action=deconnexion"> Deconnexion </a><br>';
+            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong> | ';
+            echo '<a href="index.php?action=afficherInventaire"> Inventaire </a> | ';
             echo '<a href="index.php?action=solde"> Voir mon solde </a><br>';
             echo '<a href="index.php?action=recharger"> recharger mon compte </a>';
 
@@ -44,12 +46,12 @@ class connexion_vue{
     public function form_connexion(){
         echo '
             <h2>Connexion</h2>
-            <form method = "POST" action = "index.php?action=connexion">
+            <form method = "POST" action = "index.php?module=buvette&action=choixbuvette">
                 <label>Login :</label> <br>
                 <input type = "text" name= "login"><br>
     
                 <label>Mot de passe :</label><br>
-                <input type = "text" name= "mdp"> <br>
+                <input type = "password" name= "mdp"> <br>
     
                 <input type = "submit" value="Connecter">
             </form>

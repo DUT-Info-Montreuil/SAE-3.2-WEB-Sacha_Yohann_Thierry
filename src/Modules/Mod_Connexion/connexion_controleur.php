@@ -14,7 +14,7 @@ class connexion_controleur {
     }
 
     public function exec(){
-        switch($this -> action){
+        switch($this->action){
             case "formConnexion":
                 $this->vue->form_connexion();
                 break;
@@ -23,6 +23,7 @@ class connexion_controleur {
                 break;
             case "inscription":
                 $this->modele->inscription();
+                $this->vue->menu();
                 break;
             case "connexion":
                 $this->modele->connexion();
@@ -41,4 +42,3 @@ class connexion_controleur {
 
 
 
-?>

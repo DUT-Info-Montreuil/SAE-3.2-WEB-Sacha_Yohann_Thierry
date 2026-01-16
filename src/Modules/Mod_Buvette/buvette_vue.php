@@ -12,6 +12,7 @@ class buvette_vue{
             echo '<li><a href="index.php?module=buvette&action=carte&id=' . $buvette['id'] . '">' . $buvette['nom'] . '</a></li>';
         }
         echo '</ul>';
+
     }
 
     public function carte($produits){
@@ -36,8 +37,9 @@ class buvette_vue{
     }
 
     public function afficherEtRechargerSolde($idCompteEtSolde){
+        echo'Bonjour '.$_SESSION['login'];
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
-        echo '<a href="index.php?module=compte&action=recharger&id=' . $idCompteEtSolde['id_utilisateur'] . '">Recharger mon solde</a>';
+        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $_SESSION['id_compte'] . '">Recharger mon solde</a>';
     }
 }
 

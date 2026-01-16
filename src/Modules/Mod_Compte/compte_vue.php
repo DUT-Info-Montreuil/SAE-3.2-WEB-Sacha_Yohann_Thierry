@@ -13,7 +13,7 @@ class compte_vue{
         echo '
             <h2>Rechargement</h2>
 
-            <form method="POST" action="index.php?module=compte&action=formRecharger">
+            <form method="POST" action="index.php?module=compte&action=recharger">
                 <label>Montant</label><br>
                 <input type="number" id="montantFinal" name="montantFinal" min="1" value="0" onclick="valeurnullpardefaut()" placeholder="0">
             

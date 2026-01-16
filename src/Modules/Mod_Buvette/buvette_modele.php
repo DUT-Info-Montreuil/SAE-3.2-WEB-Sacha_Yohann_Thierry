@@ -26,7 +26,7 @@ class buvette_modele extends Connexion{
     }
 
     public function getIdCompteEtSolde($login) {
-        $sql = self::$bdd->prepare("SELECT id_utilisateur, solde FROM Compte WHERE login = (?)");
+        $sql = self::$bdd->prepare("SELECT id_compte, solde FROM Compte WHERE login = (?)");
         $sql->execute([$login]);
         return $sql->fetch();
     }

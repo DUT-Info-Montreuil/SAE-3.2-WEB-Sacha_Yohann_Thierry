@@ -25,15 +25,16 @@ class connexion_modele extends Connexion {
 
         $sql = self::$bdd->prepare('SELECT * FROM Compte WHERE login = ?');
         $sql->execute([$login]);
-        $user = $sql->fetch(PDO::FETCH_ASSOC);
-        if ($user && password_verify($mdp, $user['mot_de_passe'])) {
-            $_SESSION['login'] = $login;
-            $_SESSION['solde'] = $user['solde'];
-            $_SESSION['id_utilisateur'] = $user['id_utilisateur'];
-            header('Location: index.php?');
-            exit;
-        } else {
+        $compte = $sql->fetch(PDO::FETCH_ASSOC);
 
+        if ($compte && password_verify($mdp, $compte['mot_de_passe'])) {
+            $_SESSION['id_compte'] = $compte['id_compte'];
+            $_SESSION['login'] = $compte['login'];
+            $_SESSION['solde'] = $compte['solde'];
+            header('Location: index.php?module=buvette&action=choixbuvette');
+            exit;
+
+        } else {
             echo "Problème lors de la connexion: Le login ou le mot de passe n'est pas correct !";
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         }
@@ -41,7 +42,7 @@ class connexion_modele extends Connexion {
 
     public function insertDataCompte($login, $mdp, $idUtilisateur){
         $sql = self::$bdd->query('SELECT COUNT(*) as nbDeCompte FROM Compte');
-        $result = $sql->fetch(PDO::FETCH_ASSOC);
+        $result = $sql->fetch();
 
         if ($result['nbDeCompte'] == 0) {
             self::$bdd->exec('ALTER TABLE Compte AUTO_INCREMENT = 1');
@@ -67,7 +68,7 @@ class connexion_modele extends Connexion {
     public function insertDataUtilisateur($nom,$prenom,$email){
         // Vérifier si la table est vide
         $sql = self::$bdd->query('SELECT COUNT(*) as nbUtilisateur FROM Utilisateur');
-        $result = $sql->fetch(PDO::FETCH_ASSOC);
+        $result = $sql->fetch();
 
         if ($result['nbUtilisateur'] == 0) {
             self::$bdd->exec('ALTER TABLE Utilisateur AUTO_INCREMENT = 1');

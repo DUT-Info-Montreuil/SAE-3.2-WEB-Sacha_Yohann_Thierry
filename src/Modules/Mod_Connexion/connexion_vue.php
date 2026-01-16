@@ -10,12 +10,17 @@ class connexion_vue{
     }
 
     public function menu(){
-        if(empty($_SESSION['login'])){
+        if(!empty($_SESSION['login'])){
             echo '<a href="index.php?module=connexion&action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {
             echo '<a href="index.php?module=connexion&action=deconnexion"> Deconnexion </a><br>';
-            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong>';
+            echo '<strong>Bienvenue, ' . htmlspecialchars($_SESSION['login']) . '</strong><br>';
+
+            if(isset($_SESSION['id_compte'])) {
+                echo '<br>ID Compte : ' . $_SESSION['id_compte'];
+            }
+
         }
     }
 
@@ -46,7 +51,7 @@ class connexion_vue{
     public function form_connexion(){
         echo '
             <h2>Connexion</h2>
-            <form method = "POST" action = "index.php?module=buvette&action=choixbuvette">
+            <form method = "POST" action = "index.php?action=connexion">
                 <label>Login :</label> <br>
                 <input type = "text" name= "login" required><br>
     

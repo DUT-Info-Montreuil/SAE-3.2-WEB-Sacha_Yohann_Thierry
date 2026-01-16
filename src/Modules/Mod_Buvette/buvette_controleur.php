@@ -15,11 +15,11 @@ class buvette_controleur{
     }
 
     public function exec(){
-        switch($this->action){
+        switch($this->action) {
             case "choixbuvette" :
-                $_SESSION['login'] = $_POST['login'];
 
                 $this->vue->choixBuvette($this->modele->getNomBuvettes());
+
                 break;
             case "carte" :
                 $login = $_SESSION['login'];

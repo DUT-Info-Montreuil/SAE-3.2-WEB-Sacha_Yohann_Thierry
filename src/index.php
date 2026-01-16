@@ -12,12 +12,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">🥤 Ma Buvette</a>
+            <a class="navbar-brand fw-bold" href="index.php">🥤 BuvAsso</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <?php if(isset($_SESSION['login'])): ?>
                         <li class="nav-item"><a class="nav-link" href="index.php?module=buvette&action=choixbuvette">Buvettes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="index.php?module=compte&action=solde">Mon Solde</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php?module=compte&action=solde&id=<?php echo $_SESSION['id_compte']; ?>">Mon Solde</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-outline-danger btn-sm ms-lg-3" href="index.php?module=default&action=deconnexion">Déconnexion</a></li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="index.php?module=default&action=formConnexion">Connexion</a></li>

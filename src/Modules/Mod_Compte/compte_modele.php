@@ -23,4 +23,10 @@ class compte_modele extends Connexion {
         $sql = self::$bdd->prepare('UPDATE Compte SET solde = solde + ? WHERE login = ?');
         $sql->execute([$montant, $login]);
     }
+
+    public function getSolde(){
+        $sql = self::$bdd->prepare('SELECT id_compte ,solde FROM Compte WHERE id_compte = ?');
+        $sql->execute([$_SESSION['id_compte']]);
+        return $sql->fetch();
+    }
 }

@@ -4,11 +4,12 @@ class compte_vue{
     public function __construct(){
 
     }
-    public function solde(){
+    public function solde($compte){
+        $solde = $compte['solde'];
         echo '
         <div class="alert alert-primary shadow-sm d-flex justify-content-between align-items-center">
-            <span><strong>Utilisateur :</strong> ' . htmlspecialchars($_SESSION['login']) . '</span>
-            <h4 class="mb-0 text-dark">Solde : ' . htmlspecialchars($_SESSION['solde']) . ' €</h4>
+            <span><strong>Utilisateur :</strong> ' . ($_SESSION['login']) . '</span>
+            <h4 class="mb-0 text-dark">Solde : ' . $solde . ' €</h4>
         </div>';
     }
 
@@ -21,7 +22,7 @@ class compte_vue{
                     <div class="mb-4">
                         <label class="form-label h5">Montant à ajouter :</label>
                         <div class="input-group input-group-lg">
-                            <input type="number" id="montantFinal" name="montantFinal" class="form-control text-center" value="0" readonly>
+                            <input type="number" id="montantFinal" name="montantFinal" class="form-control text-center" value="0" oninput="this.value=this.value.replace(/[^0-9]/g,)">
                             <span class="input-group-text">€</span>
                         </div>
                     </div>

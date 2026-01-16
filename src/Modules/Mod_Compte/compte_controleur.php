@@ -20,7 +20,7 @@ class compte_controleur{
         if(isset($_SESSION['login'])) {
             switch ($this->action) {
                 case "solde";
-                    $this->vue_compte->solde();
+                    $this->vue_compte->solde($this->modele_compte->getSolde());
                     break;
                 case "formRecharger";
                     $this->vue_compte->form_recharge_compte();
@@ -32,7 +32,4 @@ class compte_controleur{
         }
 
     }
-
-
-
 }

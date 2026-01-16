@@ -6,7 +6,7 @@ class compte_modele extends Connexion {
     }
 
     public function recharger(){
-        if (!isset($_SESSION['login'])) {
+        if (!isset($_SESSION['id_compte'])) {
             return;
         }
         $login = $_SESSION['login'];
@@ -15,7 +15,6 @@ class compte_modele extends Connexion {
         if ($montant > 0) {
             $this->ajouterSolde($login, $montant);
         }
-
         header("Location: index.php?module=buvette&action=carte&id=" . $_SESSION['idBuvette']);
         exit;
     }

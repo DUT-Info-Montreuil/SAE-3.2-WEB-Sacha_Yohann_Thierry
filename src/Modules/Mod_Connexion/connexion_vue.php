@@ -61,8 +61,6 @@ class connexion_vue{
         </div>';
     }
 
-
-
     public function form_connexion(){
         echo '
         <div class="row justify-content-center">
@@ -72,7 +70,7 @@ class connexion_vue{
                         <h3 class="mb-0">Connexion</h3>
                     </div>
                     <div class="card-body p-4">
-                        <form method="POST" action="index.php?module=default&action=connexion">
+                        <form method="POST" action="index.php?action=connexion">
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Login :</label>
                                 <input type="text" name="login" required class="form-control form-control-lg" placeholder="Votre pseudonyme">
@@ -90,7 +88,6 @@ class connexion_vue{
             </div>
         </div>';
     }
-
 }
 
 ?>

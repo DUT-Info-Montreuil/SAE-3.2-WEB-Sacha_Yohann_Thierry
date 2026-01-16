@@ -14,25 +14,26 @@ class buvette_controleur{
         $this->action = isset($_GET["action"]) ? $_GET["action"]: "default";
     }
 
-   public function exec(){
-       if(!isset($_SESSION['login'])) {
-           header('Location: index.php?action=formConnexion');
-           exit;
-       }
+    public function exec(){
+        if(!isset($_SESSION['login'])) {
+            header('Location: index.php?action=formConnexion');
+            exit;
+        }
 
-       switch($this->action){
-           case "choixbuvette" :
-               $this->vue->choixBuvette($this->modele->getNomBuvettes());
-               break;
-           case "carte" :
-               $login = $_SESSION['login'];
-               $_SESSION['idBuvette'] = $_GET['id'];
-               $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($login));
-               $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
-               $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
-               break;
-       }
-   }
+        switch($this->action) {
+            case "choixbuvette" :
+                $this->vue->choixBuvette($this->modele->getNomBuvettes());
+
+                break;
+            case "carte" :
+                $login = $_SESSION['login'];
+                $_SESSION['idBuvette'] = $_GET['id'];
+                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($login));
+                $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
+                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
+                break;
+        }
+    }
 }
 
 ?>

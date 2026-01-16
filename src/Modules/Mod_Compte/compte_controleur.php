@@ -22,10 +22,10 @@ class compte_controleur{
                 case "solde";
                     $this->vue_compte->solde();
                     break;
-                case "recharger";
+                case "formRecharger";
                     $this->vue_compte->form_recharge_compte();
                     break;
-                case "formRecharger";
+                case "recharger";
                     $this->modele_compte->recharger();
                     break;
             }

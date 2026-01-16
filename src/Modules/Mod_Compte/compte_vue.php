@@ -17,7 +17,7 @@ class compte_vue{
         <div class="card shadow mt-4">
             <div class="card-header bg-info text-white"><h3>Recharger mon compte</h3></div>
             <div class="card-body">
-                <form method="POST" action="index.php?module=compte&action=formRecharger">
+                <form method="POST" action="index.php?module=compte&action=recharger">
                     <div class="mb-4">
                         <label class="form-label h5">Montant à ajouter :</label>
                         <div class="input-group input-group-lg">

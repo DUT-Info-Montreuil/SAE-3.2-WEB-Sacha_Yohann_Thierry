@@ -26,16 +26,16 @@ class connexion_modele extends Connexion {
         $sql = self::$bdd->prepare('SELECT * FROM Compte WHERE login = ?');
         $sql->execute([$login]);
         $user = $sql->fetch(PDO::FETCH_ASSOC);
+
         if ($user && password_verify($mdp, $user['mot_de_passe'])) {
             $_SESSION['login'] = $login;
             $_SESSION['solde'] = $user['solde'];
             $_SESSION['id_utilisateur'] = $user['id_utilisateur'];
-            header('Location: index.php?');
+
+            header('Location: index.php?module=buvette&action=choixbuvette');
             exit;
         } else {
-
-            echo "Problème lors de la connexion: Le login ou le mot de passe n'est pas correct !";
-            echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
+            return false;
         }
     }
 

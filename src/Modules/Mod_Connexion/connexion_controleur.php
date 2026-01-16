@@ -26,7 +26,10 @@ class connexion_controleur {
                 $this->vue->menu();
                 break;
             case "connexion":
-                $this->modele->connexion();
+                if ($this->modele->connexion() === false) {
+                    echo '<div class="alert alert-danger text-center shadow-sm">Identifiants incorrects.</div>';
+                    $this->vue->form_connexion();
+                }
                 break;
             case "deconnexion":
                 session_destroy();

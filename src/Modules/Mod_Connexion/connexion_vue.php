@@ -21,42 +21,76 @@ class connexion_vue{
 
     public function form_inscription(){
         echo '
-            <h2>Inscription</h2>
-            <form method = "POST" action = "index.php?action=inscription">
-                <label>Prénom :</label> <br>
-                <input type = "text" name= "prenom" placeholder="Enter votre prénom"><br>
-
-                <label>Nom :</label> <br>
-                <input type = "text" name= "nom" placeholder="Enter votre nom"> <br>
-                
-                <label>Adresse mail :</label> <br>
-                <input type = "text" name= "email" placeholder="Enter une adresse mail"> <br>
-            
-                <label>Login :</label> <br>
-                <input type = "text" name= "login" placeholder="Enter votre pseudonyme"><br>
-    
-                <label>Mot de passe :</label><br>
-                <input type = "password" name= "mdp" placeholder="Enter votre un mot de passe"> <br>
-    
-                <input type = "submit" value="Valider">
-            </form>
-        ';
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white text-center">
+                        <h3>Créer un compte</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" action="index.php?action=inscription">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Prénom :</label>
+                                    <input type="text" name="prenom" class="form-control" placeholder="Ex: Jean" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nom :</label>
+                                    <input type="text" name="nom" class="form-control" placeholder="Ex: Dupont" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Adresse mail :</label>
+                                <input type="email" name="email" class="form-control" placeholder="nom@exemple.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Login (pseudonyme) :</label>
+                                <input type="text" name="login" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mot de passe :</label>
+                                <input type="password" name="mdp" class="form-control" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <input type="submit" class="btn btn-success btn-lg" value="Valider l\'inscription">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>';
     }
+
+
 
     public function form_connexion(){
         echo '
-            <h2>Connexion</h2>
-            <form method = "POST" action = "index.php?module=buvette&action=choixbuvette">
-                <label>Login :</label> <br>
-                <input type = "text" name= "login" required><br>
-    
-                <label>Mot de passe :</label><br>
-                <input type = "password" name= "mdp" required> <br>
-    
-                <input type = "submit" value="Connecter">
-            </form>
-        ';
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <h3 class="mb-0">Connexion</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="POST" action="index.php?module=default&action=connexion">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Login :</label>
+                                <input type="text" name="login" required class="form-control form-control-lg" placeholder="Votre pseudonyme">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Mot de passe :</label>
+                                <input type="password" name="mdp" required class="form-control form-control-lg" placeholder="••••••••">
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg shadow-sm">Se connecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>';
     }
+
 }
 
 ?>

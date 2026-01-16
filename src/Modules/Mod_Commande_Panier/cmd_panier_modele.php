@@ -1,8 +1,5 @@
 <?php
 
-namespace Mod_Commande_Panier;
-
-class cmd_panier_modele
-{
+class cmd_panier_modele{
 
 }

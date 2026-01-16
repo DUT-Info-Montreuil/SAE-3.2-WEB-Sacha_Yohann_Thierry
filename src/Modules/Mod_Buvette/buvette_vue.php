@@ -29,14 +29,23 @@ class buvette_vue{
            echo '
            <div class="col-md-4 mb-3">
                <div class="card h-100 border-0 shadow-sm">
-                   <div class="card-body d-flex justify-content-between align-items-center">
-                       <h5 class="card-title mb-0">' . htmlspecialchars($produit['nom']) . '</h5>
+                   <div class="card-body d-flex align-items-center gap-3">
+                       <h5 class="card-title mb-0">' . htmlspecialchars($produit['nom']) .'</h5>
                        <span class="badge bg-primary rounded-pill">' . number_format($produit['prix'], 2) . ' €</span>
+                       <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" onclick="ajouter()">+</button>
+                       <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" onclick="retirer()">-</button>
                    </div>
                </div>
            </div>';
        }
        echo '</div>';
+       echo '
+            <script>
+            function ajouter{
+                
+            }
+</script>
+       ';
    }
 
     public function boutonInventaire($idInventaire){
@@ -45,7 +54,7 @@ class buvette_vue{
 
     public function afficherEtRechargerSolde($idCompteEtSolde){
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
-        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a>';
+        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a><br><br>';
     }
 }
 

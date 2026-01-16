@@ -10,7 +10,7 @@ class connexion_vue{
     }
 
     public function menu(){
-        if(empty($_SESSION['login'])){
+        if(!isset($_SESSION['login'])){
             echo '<a href="index.php?module=connexion&action=formInscription"> Inscription </a> |';
             echo '<a href="index.php?module=connexion&action=formConnexion"> Connexion </a>';
         } else {

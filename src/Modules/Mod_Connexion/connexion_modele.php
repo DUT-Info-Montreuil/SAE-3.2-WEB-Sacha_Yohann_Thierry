@@ -30,7 +30,7 @@ class connexion_modele extends Connexion {
         if ($compte && password_verify($mdp, $compte['mot_de_passe'])) {
             $_SESSION['login'] = $compte['login'];
             $_SESSION['solde'] = $compte['solde'];
-            $_SESSION['id_utilisateur'] = $compte['id_utilisateur'];
+            $_SESSION['id_compte'] = $compte['id_compte'];
 
             header('Location: index.php?module=buvette&action=choixbuvette');
             exit;

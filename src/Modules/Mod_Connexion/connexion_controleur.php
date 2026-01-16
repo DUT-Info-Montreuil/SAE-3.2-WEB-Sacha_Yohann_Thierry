@@ -33,6 +33,7 @@ class connexion_controleur {
                 header('Location: index.php');
                 exit;
             case "default":
+                $this->vue->messageBienvenue();
                 $this->vue->menu();
                 break;
         }

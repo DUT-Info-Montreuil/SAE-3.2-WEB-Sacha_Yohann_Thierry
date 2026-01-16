@@ -8,21 +8,6 @@ class buvette_controleur{
     private $vue;
     private $action;
 
-    public function afficherBuvettes(){
-        session_start();
-
-        if (!isset($_SESSION['login'])) {
-            header('Location: index.php?action=form_connexion');
-            exit;
-        }
-
-        $modele = new buvette_modele();
-        $buvettes = $modele->getBuvettes();
-
-        $vue = new buvette_vue();
-        $vue->afficher($buvettes);
-    }
-
     public function __construct(){
         $this->modele = new buvette_modele();
         $this->vue = new buvette_vue();
@@ -30,7 +15,20 @@ class buvette_controleur{
     }
 
     public function exec(){
-        $this->vue->choixBuvette($this->modele->getNomBuvettes());
+        switch($this->action){
+            case "choixbuvette" :
+                $_SESSION['login'] = $_POST['login'];
+
+                $this->vue->choixBuvette($this->modele->getNomBuvettes());
+                break;
+            case "carte" :
+                $login = $_SESSION['login'];
+                $_SESSION['idBuvette'] = $_GET['id'];
+                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($login));
+                $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
+                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
+                break;
+        }
     }
 }
 

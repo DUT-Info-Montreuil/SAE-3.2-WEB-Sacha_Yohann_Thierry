@@ -38,6 +38,35 @@ class compte_vue{
                 </form>
             </div>
         </div>';
+
+        echo '<script>
+              function ajouter(valeur) {
+                  let champ = document.getElementById("montantFinal");
+                  if (champ.value === "") {
+                      champ.value = valeur;
+                  } else {
+                      champ.value = parseInt(champ.value) + valeur;
+                  }
+              }
+              </script>
+
+              <script>
+              function retirer(valeur) {
+                  let champ = document.getElementById("montantFinal");
+                  if (champ.value  <= 0 || parseInt(champ.value) - valeur <= 0) {
+                      champ.value = 0;
+                  } else {
+                      champ.value = parseInt(champ.value) - valeur;
+                  }
+              }
+              </script>
+
+              <script>
+                  function valeurnullpardefaut(){
+                      let champ = document.getElementById("montantFinal");
+                      champ.value = "";
+                  }
+              </script>';
     }
 
 }

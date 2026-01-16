@@ -56,6 +56,11 @@
               $controleur = new compte_controleur();
               $controleur->exec();
               break;
+          case 'gestion' :
+              include_once ("Modules/Mod_Gestion/gestion_controleur.php");
+              $controleur = new gestion_controleur();
+              $controleur->exec();
+              break;
           default :
               include_once ("Modules/Mod_Connexion/connexion_controleur.php");
               $controleur = new connexion_controleur();

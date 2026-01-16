@@ -26,7 +26,7 @@ class buvette_controleur{
                 break;
             case "carte" :
                 $_SESSION['idBuvette'] = $_GET['id'];
-                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde());
+                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($_SESSION['login']));
                 $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
                 $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
                 break;

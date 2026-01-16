@@ -8,6 +8,10 @@ class inventaire_vue{
 
    public function form_inventaire($produits){
        echo '<h2 class="mb-4">Gestion de l\'Inventaire</h2>';
+       echo '<div class="d-flex justify-content-between align-items-center mb-4">
+               <h2> Liste Inventaire</h2>
+               <a href="index.php?module=gestion&action=formAjout" class="btn btn-warning">Ajouter un produit</a>
+             </div>';
        if(empty($produits)) {
            echo '<div class="alert alert-warning">L\'inventaire est vide.</div>';
            return;

@@ -28,10 +28,6 @@ class cmd_panier_modele extends Connexion {
         $sql->execute([$id_compte,$id_buvette]);
         $ligneCmd = $sql->fetch();
 
-        if (!$ligneCmd) {
-            return [];
-        }
-
         $sql = self::$bdd->prepare("
         SELECT c.*, p.nom, p.prix
         FROM Commander c

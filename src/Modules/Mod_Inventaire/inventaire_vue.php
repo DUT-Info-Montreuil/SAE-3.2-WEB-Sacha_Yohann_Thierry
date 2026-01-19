@@ -6,8 +6,16 @@ class inventaire_vue{
         echo '<a href="index.php?action=afficherInventaire"> Inventaire </a>';
     }
 
-   public function form_inventaire($produits){
+   public function form_inventaire($produits,$idbuvette){
+        echo'
+       <form method = "POST" action="index.php?module=buvette&action=carte&id='.$idbuvette.'">
+           <button class="btn btn-primary btn-lg rounded-pill">
+           Retour
+           </button>
+       </form><br>';
+
        echo '<h2 class="mb-4">Gestion de l\'Inventaire</h2>';
+
        if(empty($produits)) {
            echo '<div class="alert alert-warning">L\'inventaire est vide.</div>';
            return;

@@ -58,36 +58,8 @@ class buvette_vue{
     }
 
     public function afficherPanier(){
-        echo '<a href="index.php?module=panier&action=panier&id=' . $_SESSION['id_compte'] .'">Voir mon panier</a>';
+        echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a>';
     }
-
-    /*public function carte($produits){
-        echo '<h2 class="border-bottom pb-2 mb-4">Notre Carte</h2>';
-        if(empty($produits)) {
-            echo '<div class="alert alert-info">Aucun produit disponible pour le moment.</div>';
-            return;
-        }
-        echo '<div class="row">';
-
-        foreach ($produits as $produit) {
-            echo '
-           <div class="col-md-4 mb-3">
-               <div class="card h-100 border-0 shadow-sm">
-                   <div class="card-body d-flex align-items-center gap-3">
-                       <h5 class="card-title mb-0">' . htmlspecialchars($produit['nom']) .'</h5>
-                       <span class="badge bg-primary rounded-pill">' . number_format($produit['prix'], 2) . ' €</span>
-
-                       <form method = "POST" action ="">
-                       <input type="hidden" name="idproduit" value="'.$produit['id'].'">
-                       <input type="hidden" name="idbuvette" value="'.$produit['id'].'">
-
-                       </form>
-                       <button class="btn btn-primary rounded-circle border-0 btn-sm align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: bold;" onclick="ajouter('.$produit['id_produit'].')">+</button>
-                       <button class="btn btn-primary rounded-circle border-0 btn-sm align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: bold;" onclick="retirer()">-</button>
-                   </div>
-               </div>
-           </div>';
-        }*/
 }
 
 ?>

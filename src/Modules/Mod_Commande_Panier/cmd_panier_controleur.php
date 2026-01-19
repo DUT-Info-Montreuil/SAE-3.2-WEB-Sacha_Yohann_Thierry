@@ -17,12 +17,16 @@ class cmd_panier_controleur{
     }
 
     public function exec(){
-        $idbuvette = $_SESSION['id'];
+
         $ligncmd =$this->modeleCmd->getLigneCommandeEnCours($_SESSION['id_compte']);
 
         switch($this->action){
-            case "panier";
-                $this->vueCmd->monPanier($this->modeleCmd->getProduit($_SESSION['id_compte'],$idbuvette),$this->modeleCmd->getTotalPrix($ligncmd));
+            case "panier":
+                $this->vueCmd->monPanier(
+                    $this->modeleCmd->getProduit($_SESSION['id_compte'],$_SESSION['idBuvette']),
+                    $this->modeleCmd->getTotalPrix($ligncmd),
+                    $_SESSION['idBuvette']
+                );
                 break;
         }
     }

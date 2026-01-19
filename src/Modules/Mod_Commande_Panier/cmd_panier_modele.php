@@ -28,6 +28,10 @@ class cmd_panier_modele extends Connexion {
         $sql->execute([$id_compte,$id_buvette]);
         $ligneCmd = $sql->fetch();
 
+        if (!$ligneCmd) {
+            return [];
+        }
+
         $sql = self::$bdd->prepare("
         SELECT c.*, p.nom, p.prix
         FROM Commander c
@@ -50,4 +54,5 @@ class cmd_panier_modele extends Connexion {
         $result = $sql->fetch(PDO::FETCH_ASSOC);
         return $result && $result['total'] !== null ? (float)$result['total'] : 0.0;
     }
+
 }

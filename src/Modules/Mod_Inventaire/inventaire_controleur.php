@@ -19,7 +19,10 @@ class inventaire_controleur{
             switch($this->action){
                 case"afficherInventaire";
                     //$produits = $this->modele->recupProduitsParBuvette($idBuvette);
-                    $this->vue->form_inventaire($this->modele->recupProduitParBuvette($_GET['id']));
+                    $this->vue->form_inventaire(
+                        $this->modele->recupProduitParBuvette($_GET['id']),
+                        $_SESSION['idBuvette']
+                    );
                     break;
             }
         //}

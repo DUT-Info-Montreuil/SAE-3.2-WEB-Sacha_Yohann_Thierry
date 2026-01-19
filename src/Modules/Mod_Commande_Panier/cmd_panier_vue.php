@@ -14,13 +14,13 @@ class cmd_panier_vue{
             ';
     }
 
-    public function monPanier($produits,$prixtotal){echo'
-<form method = "POST" action="index.php?module=buvette&action=carte&id='.'">
+    public function monPanier($produits,$prixtotal,$idbuvette){echo'
+<form method = "POST" action="index.php?module=buvette&action=carte&id='.$idbuvette.'">
          <button class="btn btn-primary btn-lg rounded-pill">
             Retour
         </button>
-</form>
-        <form method = "POST" action="index.php?module=commande&action=panier">
+</form><br>
+        <form method = "POST" action="index.php?module=commande&action=panier&id='.$idbuvette.'">
         <h2 class="border-bottom pb-2 mb-4">Mon panier</h2>';
 
         foreach ($produits as $produit) {

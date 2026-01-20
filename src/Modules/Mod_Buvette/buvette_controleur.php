@@ -48,6 +48,10 @@ class buvette_controleur{
             case "ajouterProduit":
                 $this->modele->ajouterProduit();
                 break;
+
+            case "retirerProduit";
+                $this->modele->retirerProduit();
+                break;
         }
     }
 

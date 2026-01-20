@@ -100,6 +100,25 @@ class buvette_modele extends Connexion{
 
     }
 
+    public function retirerProduit($idlignecmd,$idproduit){
+        $stmt = self::$bdd->prepare("SELECT quantite
+                                     FROM Commander
+                                     WHERE id_lignecmd = ?
+                                     AND id_produit = ?");
+        $stmt->execute([$idlignecmd, $idproduit]);
+        $ligne = $stmt->fetch();
+
+        if ($ligne) {
+            $stmt = self::$bdd->prepare("UPDATE Commander
+                                         SET quantite = quantite - 1
+                                         WHERE id_lignecmd = ?
+                                         AND id_produit = ?");
+            $stmt->execute([$idlignecmd, $idproduit]);
+        } else {
+
+        }
+    }
+
     public function ajoutBuvette($nom){
         $nomBuvettes = $this->getNomBuvettes();
 

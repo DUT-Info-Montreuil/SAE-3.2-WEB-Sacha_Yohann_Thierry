@@ -40,8 +40,14 @@ class buvette_vue{
                             <input type="hidden" name="id_buvette" value="'. $_GET['id'] .'">
                             <button type="submit" class="btn btn-primary rounded-circle border-0 btn-sm"
                                     style="width:32px; height:32px; font-weight:bold;">+</button>
-                        </form>                       
-                        <button class="btn btn-primary rounded-circle border-0 btn-sm align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: bold;" onclick="retirer()">-</button>
+                       </form>   
+                        
+                       <form method="POST" action="index.php?module=buvette&action=retirerProduit" style="display:inline">
+                            <input type="hidden" name="id_produit" value="'. $produit['id'] .'">
+                            <input type="hidden" name="id_buvette" value="'. $_GET['id'] .'">
+                            <button type="submit" class="btn btn-primary rounded-circle border-0 btn-sm"
+                                    style="width:32px; height:32px; font-weight:bold;">-</button>
+                       </form>                    
                    </div>
                </div>
            </div>';

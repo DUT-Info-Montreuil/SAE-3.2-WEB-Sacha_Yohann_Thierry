@@ -49,10 +49,10 @@ class buvette_modele extends Connexion{
             $idLigneCmd = $acmder['id_lignecmd'];
 
         }else{
-            $sql = self::$bdd->prepare("INSERT INTO LigneCommande (id_buvette,prix_total, statut, date) 
+            $sql = self::$bdd->prepare("INSERT INTO Lignecommande (id_buvette,prix_total, statut, date) 
                                         VALUES ($idBuvette,0, 'en_cours', NOW())");
             $sql->execute();
-            $sql = self::$bdd->prepare("INSERT INTO PasserCommande (id_compte, id_lignecmd, date_cmd)
+            $sql = self::$bdd->prepare("INSERT INTO Passercommande (id_compte, id_lignecmd, date_cmd)
                                         VALUES (?, ?, NOW())");
             $idLigneCmd = self::$bdd->lastInsertId();
             $sql->execute([$_SESSION['id_compte'], $idLigneCmd]);

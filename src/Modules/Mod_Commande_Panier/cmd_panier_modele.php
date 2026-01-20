@@ -6,8 +6,8 @@ class cmd_panier_modele extends Connexion {
     {
         $sql = self::$bdd->prepare("
         SELECT lc.id_lignecmd 
-        FROM LigneCommande lc
-        JOIN PasserCommande pc ON lc.id_lignecmd = pc.id_lignecmd
+        FROM Lignecommande lc
+        JOIN Passercommande pc ON lc.id_lignecmd = pc.id_lignecmd
         WHERE pc.id_compte = ? AND lc.statut = 'en_cours'
     ");
         $sql->execute([$idCompte]);
@@ -19,8 +19,8 @@ class cmd_panier_modele extends Connexion {
     public function getProduit($id_compte,$id_buvette){
         $sql = self::$bdd->prepare("
         SELECT lc.id_lignecmd 
-        FROM LigneCommande lc
-        INNER JOIN PasserCommande pc
+        FROM Lignecommande lc
+        INNER JOIN Passercommande pc
         ON pc.id_lignecmd = lc.id_lignecmd
         WHERE pc.id_compte = ? AND lc.id_buvette = ? 
         AND lc.statut = 'en_cours'
@@ -47,7 +47,7 @@ class cmd_panier_modele extends Connexion {
         WHERE c.id_lignecmd = ?
     ");
         $sql->execute([$idLigneCmd]);
-        $result = $sql->fetch(PDO::FETCH_ASSOC);
+        $result = $sql->fetch();
         return $result && $result['total'] !== null ? (float)$result['total'] : 0.0;
     }
 

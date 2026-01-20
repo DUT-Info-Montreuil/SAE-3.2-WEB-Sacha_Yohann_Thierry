@@ -14,7 +14,7 @@ class buvette_modele extends Connexion{
     }
 
     public function recupProduits($idBuvette){
-        $sql = self::$bdd->prepare('SELECT nom, prix FROM Stock INNER JOIN Produit ON id_produit = id WHERE id_inventaire = ?');
+        $sql = self::$bdd->prepare('SELECT * FROM Stock INNER JOIN Produit ON id_produit = id WHERE id_inventaire = ?');
         $sql->execute([$idBuvette]);
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }

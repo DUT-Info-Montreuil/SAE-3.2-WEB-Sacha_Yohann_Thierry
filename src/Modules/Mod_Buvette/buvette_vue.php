@@ -25,13 +25,22 @@ class buvette_vue{
            return;
        }
        echo '<div class="row">';
+
        foreach ($produits as $produit) {
            echo '
            <div class="col-md-4 mb-3">
                <div class="card h-100 border-0 shadow-sm">
-                   <div class="card-body d-flex justify-content-between align-items-center">
-                       <h5 class="card-title mb-0">' . htmlspecialchars($produit['nom']) . '</h5>
+                   <div class="card-body d-flex align-items-center gap-3">
+                       <h5 class="card-title mb-0">' . htmlspecialchars($produit['nom']) .'</h5>
                        <span class="badge bg-primary rounded-pill">' . number_format($produit['prix'], 2) . ' €</span>
+
+                       <form method="POST" action="index.php?module=buvette&action=ajouterProduit" style="display:inline">
+                            <input type="hidden" name="id_produit" value="'. $produit['id'] .'">
+                            <input type="hidden" name="id_buvette" value="'. $_GET['id'] .'">
+                            <button type="submit" class="btn btn-primary rounded-circle border-0 btn-sm"
+                                    style="width:32px; height:32px; font-weight:bold;">+</button>
+                        </form>                       
+                        <button class="btn btn-primary rounded-circle border-0 btn-sm align-items-center justify-content-center" style="width: 32px; height: 32px; font-weight: bold;" onclick="retirer()">-</button>
                    </div>
                </div>
            </div>';
@@ -40,12 +49,16 @@ class buvette_vue{
    }
 
     public function boutonInventaire($idInventaire){
-        echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a>';
+        echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a><br>';
     }
 
     public function afficherEtRechargerSolde($idCompteEtSolde){
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
-        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a>';
+        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a><br><br>';
+    }
+
+    public function afficherPanier(){
+        echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a>';
     }
 }
 

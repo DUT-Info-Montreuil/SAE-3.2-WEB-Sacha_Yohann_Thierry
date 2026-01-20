@@ -13,7 +13,14 @@ class compte_vue{
         </div>';
     }
 
-    public function form_recharge_compte(){
+    public function form_recharge_compte($idbuvette){
+        echo'
+        <form method = "POST" action="index.php?module=buvette&action=carte&id='.$idbuvette.'">
+         <button class="btn btn-primary btn-lg rounded-pill">
+            Retour
+        </button>
+        </form><br>';
+
         echo '
         <div class="card shadow mt-4">
             <div class="card-header bg-info text-white"><h3>Recharger mon compte</h3></div>

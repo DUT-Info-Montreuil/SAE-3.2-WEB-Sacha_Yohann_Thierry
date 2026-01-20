@@ -61,6 +61,10 @@
               $controleur = new gestion_controleur();
               $controleur->exec();
               break;
+          case 'panier';
+              include_once ("Modules/Mod_Commande_Panier/cmd_panier_controleur.php");
+              $controleur = new cmd_panier_controleur();
+              $controleur->exec();
           default :
               include_once ("Modules/Mod_Connexion/connexion_controleur.php");
               $controleur = new connexion_controleur();

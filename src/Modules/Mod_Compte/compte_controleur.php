@@ -23,7 +23,7 @@ class compte_controleur{
                     $this->vue_compte->solde($this->modele_compte->getSolde());
                     break;
                 case "formRecharger";
-                    $this->vue_compte->form_recharge_compte();
+                    $this->vue_compte->form_recharge_compte($_SESSION['idBuvette']);
                     break;
                 case "recharger";
                     $this->modele_compte->recharger();

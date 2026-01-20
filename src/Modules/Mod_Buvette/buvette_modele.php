@@ -30,6 +30,22 @@ class buvette_modele extends Connexion{
         $sql->execute([$_SESSION['id_compte']]);
         return $sql->fetch();
     }
+
+    public function ajoutBuvette($nom){
+        $nomBuvettes = $this->getNomBuvettes();
+
+        foreach ($nomBuvettes as $buvette) {
+            if ($nom === $buvette['nom']) {
+                return true;
+            }
+        }
+
+        $sql = self::$bdd->prepare("INSERT INTO Buvette (nom) VALUES (?)");
+        $sql->execute([$nom]);
+
+        header('Location: index.php?module=buvette&action=choixbuvette');
+        exit;
+    }
 }
 
 ?>

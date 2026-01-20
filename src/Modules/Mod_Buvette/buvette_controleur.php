@@ -7,6 +7,7 @@ class buvette_controleur{
     private $modele;
     private $vue;
     private $action;
+    private $existe;
 
     public function __construct(){
         $this->modele = new buvette_modele();
@@ -23,6 +24,19 @@ class buvette_controleur{
         switch($this->action) {
             case "choixbuvette" :
                 $this->vue->choixBuvette($this->modele->getNomBuvettes());
+                break;
+            case "formAjoutBuvette" :
+                $this->vue->formAjoutBuvette();
+                break;
+            case "ajoutBuvette":
+                if (!$this->modele->ajoutBuvette($_POST['nomBuvette'])) {
+                    $this->modele->ajoutBuvette($_POST['nomBuvette']);
+                } else {
+                    echo "<div class='alert alert-danger text-center'>
+                            Une buvette avec ce nom existe déjà.
+                          </div>";
+                    $this->vue->formAjoutBuvette();
+                }
                 break;
             case "carte" :
                 $_SESSION['idBuvette'] = $_GET['id'];

@@ -8,6 +8,7 @@ class buvette_vue{
    public function choixBuvette($buvettes){
        echo '<div class="text-center mb-4"><h2>Sélectionnez votre Buvette</h2></div>';
        echo '<div class="list-group shadow-sm">';
+       echo '<a href="index.php?module=buvette&action=formAjoutBuvette">Créer une buvette</a>';
        foreach($buvettes as $buvette){
            echo '<a href="index.php?module=buvette&action=carte&id=' . $buvette['id'] . '"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -46,6 +47,32 @@ class buvette_vue{
     public function afficherEtRechargerSolde($idCompteEtSolde){
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
         echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a>';
+    }
+
+    public function formAjoutBuvette(){
+        echo '
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-8">
+                    <div class="card shadow">
+                        <div class="card-header bg-success text-white text-center">
+                            <h3>Créer une buvette </h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <form method="POST" action="index.php?module=buvette&action=ajoutBuvette">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nom buvette :</label>
+                                        <input type="text" name="nomBuvette" class="form-control" placeholder="Ex: buvette" required>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <input type="submit" class="btn btn-success btn-lg" value="Valider l\'inscription">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>';
     }
 }
 

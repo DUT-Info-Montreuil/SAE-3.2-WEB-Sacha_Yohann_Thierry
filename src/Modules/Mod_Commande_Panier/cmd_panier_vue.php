@@ -33,7 +33,7 @@ class cmd_panier_vue{
                   ';
             }
         }else{
-            echo'rien du tout';
+            echo'rien du tout ';
         }
         echo '<br><br><h5>Total : '.number_format($prixtotal, 2).'</h5>';
     }

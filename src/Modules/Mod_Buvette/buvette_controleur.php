@@ -43,9 +43,14 @@ class buvette_controleur{
                 $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($_SESSION['login']));
                 $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
                 $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
+                $this->vue->afficherPanier();
+                break;
+            case "ajouterProduit":
+                $this->modele->ajouterProduit();
                 break;
         }
     }
+
 }
 
 ?>

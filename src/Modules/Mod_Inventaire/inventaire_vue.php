@@ -31,11 +31,12 @@ class inventaire_vue{
                        <th>Produit</th>
                        <th class="text-center">Prix Unitaire</th>
                        <th class="text-center">Quantité en Stock</th>
+                       <th class="text-center">Actions</th>
                    </tr>
                </thead>
                <tbody>';
        foreach ($produits as $produit) {
-           $stockClass = ($produit['quantite'] < 5) ? 'table-danger' : ''; // Alerte si stock faible
+           $stockClass = ($produit['quantite'] < 5) ? 'table-danger' : '';
            echo '
                    <tr class="'.$stockClass.'">
                        <td class="fw-bold">' . htmlspecialchars($produit['nom']) . '</td>
@@ -44,6 +45,11 @@ class inventaire_vue{
                            <span class="badge '.($produit['quantite'] > 0 ? 'bg-success' : 'bg-danger').'">
                                ' . $produit['quantite'] . '
                            </span>
+                       </td>
+                       <td class="text-center">
+                           <a href="index.php?module=gestion&action=formModif&id_produit=' . $produit['id'] . '" class="btn btn-sm btn-outline-primary">
+                               Modifier
+                           </a>
                        </td>
                    </tr>';
        }

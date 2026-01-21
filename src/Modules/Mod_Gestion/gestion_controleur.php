@@ -44,6 +44,30 @@ class gestion_controleur {
                     echo "Erreur : Session expirée ou buvette non sélectionnée.";
                 }
                 break;
+
+            case "formModif":
+                if(isset($_GET['id_produit']) && isset($_SESSION['idBuvette'])){
+                    $produit = $this->modele->recupProduit($_GET['id_produit'], $_SESSION['idBuvette']);
+                    if($produit){
+                        $this->vue->form_modif_produit($produit);
+                    } else {
+                        echo "Produit introuvable.";
+                    }
+                }
+                break;
+
+            case "validerModif":
+                if(isset($_POST['id_produit']) && isset($_SESSION['idBuvette'])){
+                    $this->modele->modifierProduit(
+                        $_POST['id_produit'],
+                        $_POST['nom'],
+                        $_POST['prix'],
+                        $_POST['quantite'],
+                        $_SESSION['idBuvette']
+                    );
+                    header('Location: index.php?module=inventaire&id=' . $_SESSION['idBuvette']);
+                }
+                break;
         }
     }
 }

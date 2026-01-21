@@ -45,7 +45,7 @@ class buvette_controleur{
                 $this->vue->TitreBienvenue($idcompte,$nomBuvette);
                 $this->vue->afficherEtRechargerSolde($idcompte);
                 $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
-                $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
+                $this->vue->boutonInventaire($_SESSION['idBuvette']);
                 $this->vue->afficherPanier();
                 break;
             case "ajouterProduit":

@@ -63,14 +63,14 @@ class buvette_modele extends Connexion{
             $idLigneCmd = self::$bdd->lastInsertId();
             $sql->execute([$_SESSION['id_compte'], $idLigneCmd]);
         }
-        $this->updateQuantite($idLigneCmd,$idProduit);
-        $this->updatePrix($idLigneCmd,$idProduit);
+        $this->incrementerQuantite($idLigneCmd,$idProduit);
+        $this->incrementerPrix($idLigneCmd,$idProduit);
 
         header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
         exit;
     }
 
-    public function updateQuantite($idlignecmd,$idproduit){
+    public function incrementerQuantite($idlignecmd,$idproduit){
         $stmt = self::$bdd->prepare("SELECT quantite
                                      FROM Commander
                                      WHERE id_lignecmd = ?
@@ -91,7 +91,7 @@ class buvette_modele extends Connexion{
         }
     }
 
-    public function updatePrix($idlignecmd,$idproduit){
+    public function incrementerPrix($idlignecmd,$idproduit){
 
         $sql = self::$bdd->prepare("SELECT prix FROM Produit WHERE id = ? ");
         $sql->execute([$idproduit]);
@@ -103,26 +103,83 @@ class buvette_modele extends Connexion{
                                                WHERE id_lignecmd = ?");
             $updateprix->execute([$produit['prix'], $idlignecmd]);
         }
-
     }
 
-    public function retirerProduit($idlignecmd,$idproduit){
+    public function retirerProduit(){
+
+        $idProduit = $_POST['id_produit'];
+        $idBuvette = $_POST['id_buvette'];
+
+        $sql = self::$bdd->prepare("SELECT lc.id_lignecmd
+                                    FROM Lignecommande lc
+                                    inner join Passercommande pc
+                                    on pc.id_lignecmd = lc.id_lignecmd
+                                    WHERE pc.id_compte=? and id_buvette = ? and lc.statut like 'en_cours'");
+        $sql ->execute([$_SESSION['id_compte'],$idBuvette]);
+        $acmder = $sql->fetch();
+
+        if($acmder){
+            $idLigneCmd = $acmder['id_lignecmd'];
+            $this->decrementerQuantite($idLigneCmd,$idProduit);
+            $this->decrementerPrix($idLigneCmd,$idProduit);
+        }
+
+        header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
+        exit;
+    }
+
+    public function decrementerQuantite($idlignecmd,$idproduit){
+
         $stmt = self::$bdd->prepare("SELECT quantite
                                      FROM Commander
                                      WHERE id_lignecmd = ?
                                      AND id_produit = ?");
         $stmt->execute([$idlignecmd, $idproduit]);
-        $ligne = $stmt->fetch();
+        $ligne = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($ligne) {
+        if (!$ligne) {
+            return;
+        }
+
+        if ($ligne['quantite'] > 1) {
             $stmt = self::$bdd->prepare("UPDATE Commander
                                          SET quantite = quantite - 1
                                          WHERE id_lignecmd = ?
                                          AND id_produit = ?");
             $stmt->execute([$idlignecmd, $idproduit]);
-        } else {
-
+        }else{
+            $stmt = self::$bdd->prepare("DELETE FROM Commander
+                                         WHERE id_lignecmd = ?
+                                         AND id_produit = ?");
+            $stmt->execute([$idlignecmd, $idproduit]);
         }
+    }
+
+    public function decrementerPrix($idlignecmd,$idproduit){
+        $sql = self::$bdd->prepare("SELECT prix FROM Produit WHERE id = ? ");
+        $sql->execute([$idproduit]);
+        $produit = $sql->fetch();
+
+        if (!$produit) {
+            return;
+        }
+
+        $sql = self::$bdd->prepare("SELECT prix_total 
+                                    FROM Lignecommande 
+                                    WHERE id_lignecmd = ?");
+        $sql->execute([$idlignecmd]);
+        $ligne = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if (!$ligne) {
+            return;
+        }
+
+        $nouveauPrix = max(0, $ligne['prix_total'] - $produit['prix']);
+
+        $update = self::$bdd->prepare("UPDATE Lignecommande
+                                       SET prix_total = ?
+                                       WHERE id_lignecmd = ?");
+        $update->execute([$nouveauPrix, $idlignecmd]);
     }
 
     public function ajoutBuvette($nom){

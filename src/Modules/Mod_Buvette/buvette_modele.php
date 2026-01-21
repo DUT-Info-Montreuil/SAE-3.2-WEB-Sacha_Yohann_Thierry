@@ -13,6 +13,12 @@ class buvette_modele extends Connexion{
         return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getNomBuvettesParId($id){
+        $sql = self::$bdd->prepare('SELECT nom FROM Buvette WHERE id = ?');
+        $sql->execute([$id]);
+        return $sql->fetch();
+    }
+
     public function recupProduits($idBuvette){
         $sql = self::$bdd->prepare('SELECT * FROM Stock INNER JOIN Produit ON id_produit = id WHERE id_inventaire = ?');
         $sql->execute([$idBuvette]);
@@ -26,7 +32,7 @@ class buvette_modele extends Connexion{
     }
 
     public function getIdCompteEtSolde() {
-        $sql = self::$bdd->prepare("SELECT id_compte, solde FROM Compte WHERE id_compte = (?)");
+        $sql = self::$bdd->prepare("SELECT * FROM Compte WHERE id_compte = (?)");
         $sql->execute([$_SESSION['id_compte']]);
         return $sql->fetch();
     }

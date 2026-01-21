@@ -59,6 +59,11 @@ class buvette_vue{
         echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a><br>';
     }
 
+    public function titreBienvenue($idCompteEtSolde,$buvette){
+        echo '<h2 class="border-bottom pb-2 mb-4">Bienvenue '.$idCompteEtSolde['login'].' 👋<br>
+              Vous êtes sur '.$buvette['nom'].'</h2>';
+    }
+
     public function afficherEtRechargerSolde($idCompteEtSolde){
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
         echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a><br><br>';

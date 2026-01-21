@@ -20,6 +20,7 @@ class buvette_controleur{
             header('Location: index.php?action=formConnexion');
             exit;
         }
+        $idcompte = $this->modele->getIdCompteEtSolde();
 
         switch($this->action) {
             case "choixbuvette" :
@@ -40,7 +41,9 @@ class buvette_controleur{
                 break;
             case "carte" :
                 $_SESSION['idBuvette'] = $_GET['id'];
-                $this->vue->afficherEtRechargerSolde($this->modele->getIdCompteEtSolde($_SESSION['login']));
+                $nomBuvette = $this->modele->getNomBuvettesParId($_SESSION['idBuvette']);
+                $this->vue->TitreBienvenue($idcompte,$nomBuvette);
+                $this->vue->afficherEtRechargerSolde($idcompte);
                 $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
                 $this->vue->boutonInventaire($this->modele->getInventaireBuvette($_SESSION['idBuvette']));
                 $this->vue->afficherPanier();

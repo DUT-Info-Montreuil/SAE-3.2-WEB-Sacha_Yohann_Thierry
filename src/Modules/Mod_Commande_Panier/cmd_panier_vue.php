@@ -34,7 +34,7 @@ class cmd_panier_vue{
             ';
         }
         if($prixtotal <= 0){
-            echo'rien du tout ';
+            echo'<div class="alert alert-info">Votre panier est vide</div>';
         }
         echo '<br><h5>Total : '.number_format($prixtotal, 2).'€</h5>'
         ;

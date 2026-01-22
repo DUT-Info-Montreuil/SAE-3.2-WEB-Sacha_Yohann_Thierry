@@ -13,11 +13,18 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">🥤 BuvAsso</a>
+            <?php if(isset($_SESSION['login'])): ?>
+            <li class="nav-item"> <span class="nav-link" style="color: lightgrey; padding: 0.5rem 1rem;">Compte : <?php echo $_SESSION['login']?></span> </li>
+            <li class="nav-item" ><a class="nav-link btn btn-outline-primary"
+                                     style="color: lightgrey; padding: 0.5rem 0.5rem;"
+                                     href="index.php?module=compte&action=solde&id=<?php echo $_SESSION['id_compte']; ?>">Votre Solde</a></li>
+
+            <?php endif; ?>
+
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <?php if(isset($_SESSION['login'])): ?>
-                        <li class="nav-item"><a class="nav-link" href="index.php?module=buvette&action=choixbuvette">Buvettes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="index.php?module=compte&action=solde&id=<?php echo $_SESSION['id_compte']; ?>">Mon Solde</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-outline-info" href="index.php?module=buvette&action=choixbuvette">Buvettes</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-outline-danger btn-sm ms-lg-3" href="index.php?module=default&action=deconnexion">Déconnexion</a></li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="index.php?module=default&action=formConnexion">Connexion</a></li>

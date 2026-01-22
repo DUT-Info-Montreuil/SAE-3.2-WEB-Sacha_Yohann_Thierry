@@ -18,12 +18,19 @@ class cmd_panier_controleur{
 
     public function exec(){
 
-        $ligncmd =$this->modeleCmd->getLigneCommandeEnCours($_SESSION['id_compte'],$_SESSION['idBuvette']);
+        if(isset($_SESSION['client_servi'])) {
+            $idClientActuel = $_SESSION['client_servi']['id_compte'];
+
+            echo '<div class="alert alert-info text-center">🛒 Panier de : <strong>'. $_SESSION['client_servi']['login'] .'</strong></div>';
+        } else {
+            $idClientActuel = $_SESSION['id_compte'];
+        }
+        $ligncmd =$this->modeleCmd->getLigneCommandeEnCours($idClientActuel,$_SESSION['idBuvette']);
 
         switch($this->action){
             case "panier":
                 $this->vueCmd->monPanier(
-                    $this->modeleCmd->getProduit($_SESSION['id_compte'],$_SESSION['idBuvette']),
+                    $this->modeleCmd->getProduit($idClientActuel,$_SESSION['idBuvette']),
                     $this->modeleCmd->getTotalPrix($ligncmd,$_SESSION['idBuvette']),
                     $_SESSION['idBuvette']
                 );

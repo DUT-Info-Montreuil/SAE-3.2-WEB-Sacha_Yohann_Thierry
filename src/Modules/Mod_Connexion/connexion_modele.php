@@ -31,6 +31,7 @@ class connexion_modele extends Connexion {
             $_SESSION['login'] = $compte['login'];
             $_SESSION['solde'] = $compte['solde'];
             $_SESSION['id_compte'] = $compte['id_compte'];
+            $_SESSION['id_utilisateur'] = $compte['id_utilisateur'].
 
             header('Location: index.php?module=buvette&action=choixbuvette');
             exit;
@@ -65,7 +66,6 @@ class connexion_modele extends Connexion {
     }
 
     public function insertDataUtilisateur($nom,$prenom,$email){
-        // Vérifier si la table est vide
         $sql = self::$bdd->query('SELECT COUNT(*) as nbUtilisateur FROM Utilisateur');
         $result = $sql->fetch();
 

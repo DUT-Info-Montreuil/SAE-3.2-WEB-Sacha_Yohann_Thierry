@@ -98,6 +98,50 @@ class buvette_vue{
                 </div>
             </div>';
     }
+
+   public function form_ajout_admin($idBuvette){
+       echo '
+       <div class="row justify-content-center mt-5 mb-5">
+           <div class="col-md-8">
+               <div class="card border-danger shadow">
+                   <div class="card-header bg-danger text-white">
+                       <h5 class="mb-0">👮 Zone Admin : Nommer un co-administrateur</h5>
+                   </div>
+                   <div class="card-body">
+                       <p>Ajouter un autre administrateur à cette buvette :</p>
+                       <form method="POST" action="index.php?module=buvette&action=nommerAdmin">
+                           <div class="input-group">
+                               <input type="text" name="login_cible" class="form-control" placeholder="Login du futur admin" required>
+                               <button class="btn btn-outline-danger" type="submit">Nommer Admin</button>
+                           </div>
+                           <input type="hidden" name="id_buvette" value="'.$idBuvette.'">
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>';
+   }
+
+    public function barre_vendeur($clientServi = null){
+        echo '<div class="card bg-dark text-white mb-4 shadow">';
+        echo '<div class="card-body d-flex justify-content-between align-items-center">';
+
+        if($clientServi){
+            echo '<div>
+                    <h4 class="m-0"> Mode Vente</h4>
+                    <span>Client actuel : <strong>' . htmlspecialchars($clientServi['login']) . '</strong> (Solde: ' . $clientServi['solde'] . '€)</span>
+                  </div>';
+            echo '<a href="index.php?module=buvette&action=annulerSelection" class="btn btn-outline-light btn-sm">Changer de client</a>';
+        } else {
+            echo '<h4 class="m-0 me-3"> Servir un client :</h4>';
+            echo '<form method="POST" action="index.php?module=buvette&action=selectionnerClient" class="d-flex">
+                    <input type="text" name="login_client" class="form-control me-2" placeholder="Login du client" required>
+                    <button type="submit" class="btn btn-primary">Sélectionner</button>
+                  </form>';
+        }
+
+        echo '</div></div>';
+    }
 }
 
 ?>

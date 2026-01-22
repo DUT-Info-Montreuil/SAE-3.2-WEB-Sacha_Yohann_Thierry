@@ -38,37 +38,36 @@ class buvette_modele extends Connexion{
     }
 
 
-    public function ajouterProduit(){
+    public function ajouterProduit($idProduit, $idAcheteur, $idBuvette){
+            $sql = self::$bdd->prepare("SELECT lc.id_lignecmd
+                                        FROM Lignecommande lc
+                                        inner join Passercommande pc
+                                        on pc.id_lignecmd = lc.id_lignecmd
+                                        WHERE pc.id_compte=? and id_buvette = ? and lc.statut like 'en_cours'");
+            $sql ->execute([$idAcheteur, $idBuvette]);
+            $acmder = $sql->fetch();
 
-        $idProduit = $_POST['id_produit'];
-        $idBuvette = $_POST['id_buvette'];
+            if($acmder){
+                $idLigneCmd = $acmder['id_lignecmd'];
 
-        $sql = self::$bdd->prepare("SELECT lc.id_lignecmd
-                                    FROM Lignecommande lc
-                                    inner join Passercommande pc
-                                    on pc.id_lignecmd = lc.id_lignecmd
-                                    WHERE pc.id_compte=? and id_buvette = ? and lc.statut like 'en_cours'");
-        $sql ->execute([$_SESSION['id_compte'],$idBuvette]);
-        $acmder = $sql->fetch();
+            }else{
+                $sql = self::$bdd->prepare("INSERT INTO Lignecommande (id_buvette, prix_total, statut, date)
+                                            VALUES (?, 0, 'en_cours', NOW())");
+                $sql->execute([$idBuvette]);
 
-        if($acmder){
-            $idLigneCmd = $acmder['id_lignecmd'];
+                $idLigneCmd = self::$bdd->lastInsertId();
 
-        }else{
-            $sql = self::$bdd->prepare("INSERT INTO Lignecommande (id_buvette,prix_total, statut, date)
-                                        VALUES ($idBuvette,0, 'en_cours', NOW())");
-            $sql->execute();
-            $sql = self::$bdd->prepare("INSERT INTO Passercommande (id_compte, id_lignecmd, date_cmd)
-                                        VALUES (?, ?, NOW())");
-            $idLigneCmd = self::$bdd->lastInsertId();
-            $sql->execute([$_SESSION['id_compte'], $idLigneCmd]);
+                $sql = self::$bdd->prepare("INSERT INTO Passercommande (id_compte, id_lignecmd, date_cmd)
+                                            VALUES (?, ?, NOW())");
+
+                $sql->execute([$idAcheteur, $idLigneCmd]);
+            }
+
+            $this->incrementerQuantite($idLigneCmd,$idProduit);
+            $this->incrementerPrix($idLigneCmd,$idProduit);
+
+            return true;
         }
-        $this->incrementerQuantite($idLigneCmd,$idProduit);
-        $this->incrementerPrix($idLigneCmd,$idProduit);
-
-        header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
-        exit;
-    }
 
     public function incrementerQuantite($idlignecmd,$idproduit){
         $stmt = self::$bdd->prepare("SELECT quantite
@@ -105,28 +104,21 @@ class buvette_modele extends Connexion{
         }
     }
 
-    public function retirerProduit(){
+    public function retirerProduit($idProduit, $idAcheteur, $idBuvette){
 
-        $idProduit = $_POST['id_produit'];
-        $idBuvette = $_POST['id_buvette'];
+            $sql = self::$bdd->prepare("SELECT lc.id_lignecmd FROM Lignecommande lc INNER JOIN Passercommande pc ON pc.id_lignecmd = lc.id_lignecmd WHERE pc.id_compte = ? AND lc.id_buvette = ? AND lc.statut = 'en_cours'");
+            $sql->execute([$idAcheteur, $idBuvette]);
+            $commande = $sql->fetch();
 
-        $sql = self::$bdd->prepare("SELECT lc.id_lignecmd
-                                    FROM Lignecommande lc
-                                    inner join Passercommande pc
-                                    on pc.id_lignecmd = lc.id_lignecmd
-                                    WHERE pc.id_compte=? and id_buvette = ? and lc.statut like 'en_cours'");
-        $sql ->execute([$_SESSION['id_compte'],$idBuvette]);
-        $acmder = $sql->fetch();
+            if($commande){
+                $idLigneCmd = $commande['id_lignecmd'];
 
-        if($acmder){
-            $idLigneCmd = $acmder['id_lignecmd'];
-            $this->decrementerQuantite($idLigneCmd,$idProduit);
-            $this->decrementerPrix($idLigneCmd,$idProduit);
+                $this->decrementerQuantite($idLigneCmd, $idProduit);
+                $this->decrementerPrix($idLigneCmd, $idProduit);
+            }
+
+            return true;
         }
-
-        header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
-        exit;
-    }
 
     public function decrementerQuantite($idlignecmd,$idproduit){
 
@@ -182,20 +174,77 @@ class buvette_modele extends Connexion{
         $update->execute([$nouveauPrix, $idlignecmd]);
     }
 
-    public function ajoutBuvette($nom){
-        $nomBuvettes = $this->getNomBuvettes();
+    public function ajoutBuvette($nom, $idUtilisateur){
+        try {
+           self::$bdd->beginTransaction();
 
-        foreach ($nomBuvettes as $buvette) {
-            if ($nom === $buvette['nom']) {
-                return true;
-            }
+           $verif = self::$bdd->prepare('SELECT id FROM Buvette WHERE nom = ?');
+           $verif->execute([$nom]);
+           if ($verif->fetch()) {
+               self::$bdd->rollBack();
+               return false;
+           }
+
+            $reqBuvette = self::$bdd->prepare("INSERT INTO Buvette (nom) VALUES (?)");
+            $reqBuvette->execute([$nom]);
+
+            $idBuvette = self::$bdd->lastInsertId();
+
+            $reqRole = self::$bdd->prepare('INSERT INTO a_role (id_buvette, id_utilisateur, role) VALUES (?, ?, ?)');
+            $reqRole->execute([$idBuvette, $idUtilisateur, 'admin']);
+
+            self::$bdd->commit();
+            return true;
+        } catch (Exeption $e){
+            self::$bdd->rollBack();
+            return false;
+        }
+    }
+
+    public function nommerAdmin($loginCible, $idBuvette){
+
+        $sqlUser = self::$bdd->prepare('SELECT id_utilisateur FROM Compte WHERE login = ?');
+        $sqlUser->execute([$loginCible]);
+        $user = $sqlUser->fetch(PDO::FETCH_ASSOC);
+
+        if(!$user){
+            return "Utilisateur introuvable.";
         }
 
-        $sql = self::$bdd->prepare("INSERT INTO Buvette (nom) VALUES (?)");
-        $sql->execute([$nom]);
+        $idNouveauAdmin = $user['id_utilisateur'];
 
-        header('Location: index.php?module=buvette&action=choixbuvette');
-        exit;
+
+        $verif = self::$bdd->prepare('SELECT * FROM a_role WHERE id_buvette = ? AND id_utilisateur = ?');
+        $verif->execute([$idBuvette, $idNouveauAdmin]);
+
+        if($verif->fetch()){
+
+            $update = self::$bdd->prepare('UPDATE a_role SET role = "admin" WHERE id_buvette = ? AND id_utilisateur = ?');
+            $update->execute([$idBuvette, $idNouveauAdmin]);
+        } else {
+
+            $insert = self::$bdd->prepare('INSERT INTO a_role (id_buvette, id_utilisateur, role) VALUES (?, ?, "admin")');
+            $insert->execute([$idBuvette, $idNouveauAdmin]);
+        }
+
+        return "Succès";
+    }
+
+    public function estAdmin($idUtilisateur, $idBuvette){
+        $sql = self::$bdd->prepare('SELECT role FROM a_role WHERE id_utilisateur = ? AND id_buvette = ?');
+        $sql->execute([$idUtilisateur, $idBuvette]);
+        $resultat = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if($resultat && $resultat['role'] == 'admin'){
+            return true;
+        }
+        return false;
+    }
+
+    public function getInfoClient($login){
+        $sql = self::$bdd->prepare('SELECT id_utilisateur, id_compte, login, solde FROM Compte WHERE login = ?');
+        $sql->execute([$login]);
+        return $sql->fetch(PDO::FETCH_ASSOC);
     }
 }
 

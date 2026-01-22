@@ -9,6 +9,8 @@ class buvette_vue{
        echo '<div class="text-center mb-4"><h2>Sélectionnez votre Buvette</h2></div>';
        echo '<div class="list-group shadow-sm">';
        echo '<a href="index.php?module=buvette&action=formAjoutBuvette">Créer une buvette</a>';
+       echo '<a href="index.php?module=fournisseur&action=formFournisseur">Ajouter un fournisseur</a>';
+
        foreach($buvettes as $buvette){
            echo '<a href="index.php?module=buvette&action=carte&id=' . $buvette['id'] . '"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">

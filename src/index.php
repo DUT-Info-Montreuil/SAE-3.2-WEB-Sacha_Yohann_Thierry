@@ -68,9 +68,13 @@
               $controleur = new gestion_controleur();
               $controleur->exec();
               break;
-          case 'panier';
+          case 'panier':
               include_once ("Modules/Mod_Commande_Panier/cmd_panier_controleur.php");
               $controleur = new cmd_panier_controleur();
+              $controleur->exec();
+          case 'fournisseur':
+              include_once ("Modules/Mod_Fournisseur/fournisseur_controleur.php");
+              $controleur = new fournisseur_controleur();
               $controleur->exec();
               break;
           default :

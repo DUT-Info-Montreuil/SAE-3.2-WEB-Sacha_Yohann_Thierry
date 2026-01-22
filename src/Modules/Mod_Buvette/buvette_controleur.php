@@ -40,6 +40,13 @@ class buvette_controleur{
                 }
                 break;
             case "carte" :
+                if (isset($_SESSION['erreur'])){
+                    echo "<div class='alert alert-danger text-center'>"
+                            . $_SESSION['erreur'] .
+                          "</div>";
+                    unset($_SESSION['erreur']);
+                }
+
                 $_SESSION['idBuvette'] = $_GET['id'];
                 $nomBuvette = $this->modele->getNomBuvettesParId($_SESSION['idBuvette']);
                 $this->vue->TitreBienvenue($idcompte,$nomBuvette);
@@ -49,9 +56,15 @@ class buvette_controleur{
                 $this->vue->afficherPanier();
                 break;
             case "ajouterProduit":
-                $this->modele->ajouterProduit();
+                $idProduit = $_POST['id_produit'];
+                if($this->modele->getQuantiteProduitCommande($idProduit, $_SESSION['idBuvette'])+1 < $this->modele->getQuantiteProduitStock($idProduit, $_SESSION['idBuvette'])){
+                    $this->modele->ajouterProduit();
+                }else{
+                    $_SESSION['erreur'] = 'Pas assez de produit en stock';
+                    header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
+                    exit;
+                }
                 break;
-
             case "retirerProduit";
                 $this->modele->retirerProduit();
                 break;

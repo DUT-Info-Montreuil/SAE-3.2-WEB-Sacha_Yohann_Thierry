@@ -37,9 +37,22 @@ class buvette_modele extends Connexion{
         return $sql->fetch();
     }
 
+    public function getQuantiteProduitStock($idProduit, $idBuvette){
+        $sql = self::$bdd->prepare("SELECT quantite FROM Stock WHERE id_produit = (?) AND id_inventaire = (?)");
+        $sql->execute([$idProduit, $idBuvette]);
+        return $sql->fetch(PDO::FETCH_COLUMN);
+    }
+
+    public function getQuantiteProduitCommande($idProduit, $idBuvette){
+        $sql = self::$bdd->prepare("SELECT quantite
+                                    FROM Commander c
+                                    INNER JOIN Lignecommande lc on c.id_lignecmd = lc.id_lignecmd
+                                    WHERE id_produit = (?) AND id_buvette = (?)");
+        $sql->execute([$idProduit, $idBuvette]);
+        return $sql->fetch(PDO::FETCH_COLUMN);
+    }
 
     public function ajouterProduit(){
-
         $idProduit = $_POST['id_produit'];
         $idBuvette = $_POST['id_buvette'];
 
@@ -53,16 +66,16 @@ class buvette_modele extends Connexion{
 
         if($acmder){
             $idLigneCmd = $acmder['id_lignecmd'];
-
         }else{
             $sql = self::$bdd->prepare("INSERT INTO Lignecommande (id_buvette,prix_total, statut, date)
-                                        VALUES ($idBuvette,0, 'en_cours', NOW())");
+                                        VALUES ($idBuvette, 0, 'en_cours', NOW())");
             $sql->execute();
             $sql = self::$bdd->prepare("INSERT INTO Passercommande (id_compte, id_lignecmd, date_cmd)
                                         VALUES (?, ?, NOW())");
             $idLigneCmd = self::$bdd->lastInsertId();
             $sql->execute([$_SESSION['id_compte'], $idLigneCmd]);
         }
+
         $this->incrementerQuantite($idLigneCmd,$idProduit);
         $this->incrementerPrix($idLigneCmd,$idProduit);
 

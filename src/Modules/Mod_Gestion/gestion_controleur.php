@@ -23,22 +23,34 @@ class gestion_controleur {
 
         switch($this->action){
             case "formAjout":
+                if (isset($_SESSION['erreur'])){
+                    echo "<div class='alert alert-danger text-center'>"
+                            . $_SESSION['erreur'] .
+                          "</div>";
+                    unset($_SESSION['erreur']);
+                }
                 $this->vue->form_ajout_produit();
                 break;
 
             case "validerAjout":
                 if(isset($_POST['nom']) && isset($_SESSION['idBuvette'])){
-                    $nom = $_POST['nom'];
-                    $prix = $_POST['prix'];
-                    $quantite = $_POST['quantite'];
+                    if($_POST['quantite'] >= 0){
+                        $nom = $_POST['nom'];
+                        $prix = $_POST['prix'];
+                        $quantite = $_POST['quantite'];
 
-                    $succes = $this->modele->ajouterProduit($nom, $prix, $quantite, $_SESSION['idBuvette']);
+                        $succes = $this->modele->ajouterProduit($nom, $prix, $quantite, $_SESSION['idBuvette']);
 
-                    if($succes){
+                        if($succes){
 
-                        header('Location: index.php?module=inventaire&id=' . $_SESSION['idBuvette']);
-                    } else {
-                        echo "Erreur lors de l'ajout.";
+                            header('Location: index.php?module=inventaire&action=afficherInventaire&id=' . $_SESSION['idBuvette']);
+                        } else {
+                            echo "Erreur lors de l'ajout.";
+                        }
+                    }else{
+                        $_SESSION['erreur'] = 'impossible d\'ajouter une quantité inférieure à 0';
+                        header('Location: index.php?module=gestion&action=formAjout');
+                        exit;
                     }
                 } else {
                     echo "Erreur : Session expirée ou buvette non sélectionnée.";
@@ -46,6 +58,12 @@ class gestion_controleur {
                 break;
 
             case "formModif":
+                if (isset($_SESSION['erreur'])){
+                    echo "<div class='alert alert-danger text-center'>"
+                            . $_SESSION['erreur'] .
+                          "</div>";
+                    unset($_SESSION['erreur']);
+                }
                 if(isset($_GET['id_produit']) && isset($_SESSION['idBuvette'])){
                     $produit = $this->modele->recupProduit($_GET['id_produit'], $_SESSION['idBuvette']);
                     if($produit){
@@ -58,14 +76,20 @@ class gestion_controleur {
 
             case "validerModif":
                 if(isset($_POST['id_produit']) && isset($_SESSION['idBuvette'])){
-                    $this->modele->modifierProduit(
-                        $_POST['id_produit'],
-                        $_POST['nom'],
-                        $_POST['prix'],
-                        $_POST['quantite'],
-                        $_SESSION['idBuvette']
-                    );
-                    header('Location: index.php?module=inventaire&id=' . $_SESSION['idBuvette']);
+                    if($_POST['quantite'] >= 0){
+                        $this->modele->modifierProduit(
+                            $_POST['id_produit'],
+                            $_POST['nom'],
+                            $_POST['prix'],
+                            $_POST['quantite'],
+                            $_SESSION['idBuvette']
+                        );
+                        header('Location: index.php?module=inventaire&action=afficherInventaire&id=' . $_SESSION['idBuvette']);
+                    }else{
+                        $_SESSION['erreur'] = 'impossible d\'ajouter une quantité inférieure à 0';
+                        header('Location: index.php?module=gestion&action=formModif&id_produit=' . $_POST['id_produit']);
+                        exit;
+                    }
                 }
                 break;
         }

@@ -31,10 +31,10 @@ class compte_modele extends Connexion {
     }
 
     public function getCommandes(){
-        $sql = self::$bdd->prepare("SELECT lc.id_lignecmd, lc.date, prix_total
+        $sql = self::$bdd->prepare("SELECT lc.id_lignecmd, lc.date, prix_total, lc.statut
                                     FROM Lignecommande lc
                                     INNER JOIN Passercommande pc ON lc.id_lignecmd = pc.id_lignecmd
-                                    WHERE id_compte = (?)
+                                    WHERE id_compte = (?) AND lc.statut like 'payee'
                                     ORDER BY lc.id_lignecmd DESC");
         $sql->execute([$_SESSION['id_compte']]);
         return $sql->fetchAll();
@@ -55,7 +55,7 @@ class compte_modele extends Connexion {
                                     FROM Lignecommande lc
                                     INNER JOIN Commander c ON lc.id_lignecmd = c.id_lignecmd
                                     INNER JOIN Produit p ON c.id_produit = p.id
-                                    WHERE lc.id_lignecmd = (?) AND lc.statut like 'payee'");
+                                    WHERE lc.id_lignecmd = (?)");
         $sql->execute([$idCommande]);
         return $sql->fetchAll();
     }

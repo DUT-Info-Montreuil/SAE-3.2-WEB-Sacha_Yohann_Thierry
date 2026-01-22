@@ -100,7 +100,8 @@ class compte_vue{
         echo '<div class="text-center mb-4"><h2>Detail de la commande</h2></div>';
 
         foreach($details as $detail){
-            echo '<li>Produit : ' . $detail['nom'] . ' ' .  $detail['prix'] . '€, quantité : ' . $detail['quantite'] . '</li>';
+            $total = $detail['prix']*$detail['quantite'];
+            echo '<li>Produit : ' . $detail['nom'] . ' ' .  $detail['prix'] . '€, quantité : ' . $detail['quantite'] . '. Total : ' . $total . '€</li>';
         }
 
         echo '</div>';

@@ -48,7 +48,7 @@ class buvette_modele extends Connexion{
         $sql = self::$bdd->prepare("SELECT quantite
                                     FROM Commander c
                                     INNER JOIN Lignecommande lc on c.id_lignecmd = lc.id_lignecmd
-                                    WHERE id_produit = (?) AND id_buvette = (?)");
+                                    WHERE id_produit = (?) AND id_buvette = (?) AND lc.statut like 'en_cours'");
         $sql->execute([$idProduit, $idBuvette]);
         return $sql->fetch(PDO::FETCH_COLUMN);
     }

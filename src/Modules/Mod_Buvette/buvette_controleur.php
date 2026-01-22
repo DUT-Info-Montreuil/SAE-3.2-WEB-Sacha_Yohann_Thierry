@@ -81,13 +81,15 @@ class buvette_controleur{
                         $idAcheteur = $_SESSION['id_compte'];
                     }
                 if(isset($_POST['id_produit']) && isset($_SESSION['idBuvette'])){
-                     if($this->modele->getQuantiteProduitCommande($idProduit, $_SESSION['idBuvette'])+1 < $this->modele->getQuantiteProduitStock($idProduit, $_SESSION['idBuvette'])){
+                    $quantitecmd = $this->modele->getQuantiteProduitCommande($idProduit, $_SESSION['idBuvette'])+1;
+                    $quantitestock = $this->modele->getQuantiteProduitStock($idProduit, $_SESSION['idBuvette']);
+                    if($quantitecmd < $quantitestock){
                         $this->modele->ajouterProduit($_POST['id_produit'], $idAcheteur, $_SESSION['idBuvette']);
-                     }else{
-                          $_SESSION['erreur'] = 'Pas assez de produit en stock';
-                          header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
-                          exit;
-                     }
+                    }else{
+                        $_SESSION['erreur'] = 'Pas assez de produit en stock';
+                        header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
+                        exit;
+                    }
                 }
                 break;
 

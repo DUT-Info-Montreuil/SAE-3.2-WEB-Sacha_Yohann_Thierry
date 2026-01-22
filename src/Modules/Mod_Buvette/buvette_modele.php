@@ -79,7 +79,7 @@ class buvette_modele extends Connexion{
         $this->incrementerQuantite($idLigneCmd,$idProduit);
         $this->incrementerPrix($idLigneCmd,$idProduit);
 
-        $_SESSION['success'] = "Produit ajouté au panier ✔️";
+        $_SESSION['messageAjoutPanier'] = "Produit ajouté au panier ✔️";
 
         header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
         exit;
@@ -136,6 +136,8 @@ class buvette_modele extends Connexion{
             $this->decrementerQuantite($idLigneCmd,$idProduit);
             $this->decrementerPrix($idLigneCmd,$idProduit);
         }
+
+        $_SESSION['messageRetirPanier'] = "Produit retirer au panier ✖️";
 
         header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
         exit;

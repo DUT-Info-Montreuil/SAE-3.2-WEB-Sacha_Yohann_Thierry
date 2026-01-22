@@ -26,14 +26,23 @@ class buvette_vue{
            echo '<div class="alert alert-info">Aucun produit disponible pour le moment.</div>';
            return;
        }
-       if (!empty($_SESSION['success'])){
+       if (!empty($_SESSION['messageAjoutPanier'])){
            echo'
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                '.$_SESSION['success'].'
+                '.$_SESSION['messageAjoutPanier'].'
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div> ';
-           unset($_SESSION['success']);
-       }?>
+           unset($_SESSION['messageAjoutPanier']);
+       }
+       if (!empty($_SESSION['messageRetirPanier'])){
+           echo'
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                '.$_SESSION['messageRetirPanier'].'
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div> ';
+           unset($_SESSION['messageRetirPanier']);
+       }
+       ?>
        <script>
        setTimeout(() => {
            const alertNode = document.querySelector('.alert');

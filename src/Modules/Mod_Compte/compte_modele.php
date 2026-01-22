@@ -34,7 +34,7 @@ class compte_modele extends Connexion {
         $sql = self::$bdd->prepare("SELECT lc.id_lignecmd, lc.date, prix_total, lc.statut
                                     FROM Lignecommande lc
                                     INNER JOIN Passercommande pc ON lc.id_lignecmd = pc.id_lignecmd
-                                    WHERE id_compte = (?) AND lc.statut like 'payee'
+                                    WHERE id_compte = (?)  AND lc.statut like 'payee'
                                     ORDER BY lc.id_lignecmd DESC");
         $sql->execute([$_SESSION['id_compte']]);
         return $sql->fetchAll();
@@ -44,7 +44,7 @@ class compte_modele extends Connexion {
         $sql = self::$bdd->prepare("SELECT SUM(prix_total) AS total
                                     FROM Lignecommande lc
                                     INNER JOIN Passercommande pc ON lc.id_lignecmd = pc.id_lignecmd
-                                    WHERE id_compte = ?
+                                    WHERE id_compte = ? AND lc.statut like 'payee'
                                     ");
         $sql->execute([$_SESSION['id_compte']]);
         return $sql->fetchColumn();

@@ -2,7 +2,6 @@
 class gestion_vue {
 
     public function form_ajout_produit(){
-        var_dump($_SESSION['idBuvette']);
         echo '
         <div class="row justify-content-center mt-5">
             <div class="col-md-8">

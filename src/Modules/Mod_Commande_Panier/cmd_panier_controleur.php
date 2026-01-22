@@ -35,6 +35,23 @@ class cmd_panier_controleur{
                     $_SESSION['idBuvette']
                 );
                 break;
+            case "validerCommande":
+                if(isset($_POST['id_buvette'])){
+                    $resultat = $this->modeleCmd->payerCommande($idClientActuel, $_POST['id_buvette']);
+
+                    if($resultat == "Succès"){
+                        echo "<script>alert('✅ Paiement validé avec succès !');</script>";
+                        echo "<script>window.location.href='index.php?module=buvette&action=carte&id=".$_POST['id_buvette']."';</script>";
+                    } else {
+                        echo "<div class='alert alert-danger text-center mt-3'>❌ Erreur : $resultat</div>";
+                        $this->vueCmd->monPanier(
+                            $this->modeleCmd->getProduit($idClientActuel, $_POST['id_buvette']),
+                            $this->modeleCmd->getTotalPrix($ligncmd, $_POST['id_buvette']),
+                            $_POST['id_buvette']
+                        );
+                    }
+                }
+                break;
         }
     }
 }

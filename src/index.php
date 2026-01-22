@@ -65,6 +65,7 @@
               include_once ("Modules/Mod_Commande_Panier/cmd_panier_controleur.php");
               $controleur = new cmd_panier_controleur();
               $controleur->exec();
+              break;
           default :
               include_once ("Modules/Mod_Connexion/connexion_controleur.php");
               $controleur = new connexion_controleur();

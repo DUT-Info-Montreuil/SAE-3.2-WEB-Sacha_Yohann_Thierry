@@ -55,4 +55,68 @@ class cmd_panier_modele extends Connexion {
         return (float)$sql->fetchColumn();
     }
 
+   public function payerCommande($idCompte, $idBuvette){
+           try {
+               self::$bdd->beginTransaction();
+
+               $sqlCmd = self::$bdd->prepare("SELECT lc.id_lignecmd, lc.prix_total FROM Lignecommande lc INNER JOIN Passercommande pc ON pc.id_lignecmd = lc.id_lignecmd WHERE pc.id_compte = ? AND lc.id_buvette = ? AND lc.statut = 'en_cours' ");
+               $sqlCmd->execute([$idCompte, $idBuvette]);
+               $commande = $sqlCmd->fetch(PDO::FETCH_ASSOC);
+
+               if(!$commande){
+                   self::$bdd->rollBack();
+                   return "Aucune commande trouvée.";
+               }
+
+               $montant = $commande['prix_total'];
+               $idLigneCmd = $commande['id_lignecmd'];
+
+               $sqlSolde = self::$bdd->prepare("SELECT solde FROM Compte WHERE id_compte = ?");
+               $sqlSolde->execute([$idCompte]);
+               $soldeActuel = $sqlSolde->fetchColumn();
+
+               if($soldeActuel < $montant){
+                   self::$bdd->rollBack();
+                   return "Solde insuffisant (Manque " . ($montant - $soldeActuel) . " €).";
+               }
+
+               $sqlDebit = self::$bdd->prepare("UPDATE Compte SET solde = solde - ? WHERE id_compte = ?");
+               $sqlDebit->execute([$montant, $idCompte]);
+
+               $sqlUpdateCmd = self::$bdd->prepare("UPDATE Lignecommande SET statut = 'payee' WHERE id_lignecmd = ?");
+               $sqlUpdateCmd->execute([$idLigneCmd]);
+
+               $sqlProduits = self::$bdd->prepare("SELECT id_produit, quantite FROM Commander WHERE id_lignecmd = ?");
+               $sqlProduits->execute([$idLigneCmd]);
+               $articles = $sqlProduits->fetchAll(PDO::FETCH_ASSOC);
+
+               $sqlInv = self::$bdd->prepare("SELECT id FROM Inventaire WHERE id_buvette = ?");
+               $sqlInv->execute([$idBuvette]);
+               $idInventaire = $sqlInv->fetchColumn();
+
+               if (!$idInventaire) {
+                   self::$bdd->rollBack();
+                   return "Erreur : Aucun inventaire trouvé pour la buvette n°" . $idBuvette;
+               }
+
+               $sqlStock = self::$bdd->prepare("UPDATE Stock SET quantite = quantite - ? WHERE id_inventaire = ? AND id_produit = ?");
+
+               foreach($articles as $article){
+                   $sqlStock->execute([$article['quantite'], $idInventaire, $article['id_produit']]);
+
+                   if ($sqlStock->rowCount() == 0) {
+                        self::$bdd->rollBack();
+                        return "Erreur Stock : Le produit ID " . $article['id_produit'] . " n'existe pas dans l'inventaire n°" . $idInventaire;
+                   }
+               }
+
+               self::$bdd->commit();
+               return "Succès";
+
+           } catch (Exception $e) {
+               self::$bdd->rollBack();
+               return "Erreur technique : " . $e->getMessage();
+           }
+       }
+
 }

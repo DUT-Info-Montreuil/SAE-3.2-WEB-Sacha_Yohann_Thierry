@@ -190,8 +190,11 @@ class buvette_modele extends Connexion{
 
             $idBuvette = self::$bdd->lastInsertId();
 
-            $reqRole = self::$bdd->prepare('INSERT INTO a_role (id_buvette, id_utilisateur, role) VALUES (?, ?, ?)');
+            $reqRole = self::$bdd->prepare('INSERT INTO A_role (id_buvette, id_utilisateur, role) VALUES (?, ?, ?)');
             $reqRole->execute([$idBuvette, $idUtilisateur, 'admin']);
+
+            $reqInventaire = self::$bdd->prepare('INSERT INTO Inventaire (categorie, date, id_buvette) VALUES (NULL, NOW(), ?)');
+            $reqInventaire->execute([$idBuvette]);
 
             self::$bdd->commit();
             return true;
@@ -214,16 +217,16 @@ class buvette_modele extends Connexion{
         $idNouveauAdmin = $user['id_utilisateur'];
 
 
-        $verif = self::$bdd->prepare('SELECT * FROM a_role WHERE id_buvette = ? AND id_utilisateur = ?');
+        $verif = self::$bdd->prepare('SELECT * FROM A_role WHERE id_buvette = ? AND id_utilisateur = ?');
         $verif->execute([$idBuvette, $idNouveauAdmin]);
 
         if($verif->fetch()){
 
-            $update = self::$bdd->prepare('UPDATE a_role SET role = "admin" WHERE id_buvette = ? AND id_utilisateur = ?');
+            $update = self::$bdd->prepare('UPDATE A_role SET role = "admin" WHERE id_buvette = ? AND id_utilisateur = ?');
             $update->execute([$idBuvette, $idNouveauAdmin]);
         } else {
 
-            $insert = self::$bdd->prepare('INSERT INTO a_role (id_buvette, id_utilisateur, role) VALUES (?, ?, "admin")');
+            $insert = self::$bdd->prepare('INSERT INTO A_role (id_buvette, id_utilisateur, role) VALUES (?, ?, "admin")');
             $insert->execute([$idBuvette, $idNouveauAdmin]);
         }
 
@@ -231,7 +234,7 @@ class buvette_modele extends Connexion{
     }
 
     public function estAdmin($idUtilisateur, $idBuvette){
-        $sql = self::$bdd->prepare('SELECT role FROM a_role WHERE id_utilisateur = ? AND id_buvette = ?');
+        $sql = self::$bdd->prepare('SELECT role FROM A_role WHERE id_utilisateur = ? AND id_buvette = ?');
         $sql->execute([$idUtilisateur, $idBuvette]);
         $resultat = $sql->fetch(PDO::FETCH_ASSOC);
 

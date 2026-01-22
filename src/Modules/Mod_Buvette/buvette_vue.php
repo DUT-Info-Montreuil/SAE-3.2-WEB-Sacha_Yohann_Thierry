@@ -100,7 +100,7 @@ class buvette_vue{
     }
 
     public function afficherPanier(){
-        echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a>';
+        echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a><br>';
     }
 
     public function formAjoutBuvette(){

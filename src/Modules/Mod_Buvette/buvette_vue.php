@@ -20,11 +20,30 @@ class buvette_vue{
    }
 
    public function carte($produits){
+
        echo '<h2 class="border-bottom pb-2 mb-4">Notre Carte</h2>';
        if(empty($produits)) {
            echo '<div class="alert alert-info">Aucun produit disponible pour le moment.</div>';
            return;
        }
+       if (!empty($_SESSION['success'])){
+           echo'
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                '.$_SESSION['success'].'
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div> ';
+           unset($_SESSION['success']);
+       }?>
+       <script>
+       setTimeout(() => {
+           const alertNode = document.querySelector('.alert');
+           if (alertNode) {
+               const alert = new bootstrap.Alert(alertNode);
+               alert.close();
+           }
+       }, 2000);
+       </script>
+<?php
        echo '<div class="row">';
 
        foreach ($produits as $produit) {

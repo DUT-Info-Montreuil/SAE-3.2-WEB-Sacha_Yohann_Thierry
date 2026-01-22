@@ -47,6 +47,7 @@ class connexion_modele extends Connexion {
         if ($result['nbDeCompte'] == 0) {
             self::$bdd->exec('ALTER TABLE Compte AUTO_INCREMENT = 1');
         }
+
         $solde = 0;
         $requete = self::$bdd->prepare('INSERT INTO Compte(login, mot_de_passe,solde, id_utilisateur) VALUES (?, ?, ?,?)');
         $requete->execute([$login, $mdp, $solde, $idUtilisateur]);

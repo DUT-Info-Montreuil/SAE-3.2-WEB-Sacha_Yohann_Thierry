@@ -79,6 +79,8 @@ class buvette_modele extends Connexion{
         $this->incrementerQuantite($idLigneCmd,$idProduit);
         $this->incrementerPrix($idLigneCmd,$idProduit);
 
+        $_SESSION['success'] = "Produit ajouté au panier ✔️";
+
         header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
         exit;
         //return true;

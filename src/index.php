@@ -24,6 +24,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <?php if(isset($_SESSION['login'])): ?>
+                        <li class="nav-item"><a class="nav-link btn btn-outline-info" href="index.php?module=compte&action=historique">Historique</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-outline-info" href="index.php?module=buvette&action=choixbuvette">Buvettes</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-outline-danger btn-sm ms-lg-3" href="index.php?module=default&action=deconnexion">Déconnexion</a></li>
                     <?php else: ?>

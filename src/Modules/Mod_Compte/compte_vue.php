@@ -77,4 +77,32 @@ class compte_vue{
               </script>';
     }
 
+    public function afficherHistorique($commandes, $total){
+        echo '<div class="text-center mb-4"><h2>Votre historique de commandes</h2></div>';
+        echo '<div class="list-group shadow-sm">';
+
+        //$total = 0;
+
+        foreach($commandes as $commande){
+            echo '<a href="index.php?module=compte&action=detailCommande&id=' . $commande['id_lignecmd'] . '"
+                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                ' . $commande['date'] . ' : ' . $commande['prix_total'] . '€</br>' . '
+                <span class="btn btn-sm btn-outline-primary">Voir le detail de la commande</span>
+                </a>';
+            //$total += $commande['prix_total'];
+        }
+
+        echo '</div>';
+        echo '<h4>Total dépensé : ' . $total . '€</h4>';
+    }
+
+    public function afficherDetailCommande($details){
+        echo '<div class="text-center mb-4"><h2>Detail de la commande</h2></div>';
+
+        foreach($details as $detail){
+            echo '<li>Produit : ' . $detail['nom'] . ' ' .  $detail['prix'] . '€, quantité : ' . $detail['quantite'] . '</li>';
+        }
+
+        echo '</div>';
+    }
 }

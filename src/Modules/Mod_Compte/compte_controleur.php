@@ -19,14 +19,20 @@ class compte_controleur{
     public function exec(){
         if(isset($_SESSION['login'])) {
             switch ($this->action) {
-                case "solde";
+                case "solde":
                     $this->vue_compte->solde($this->modele_compte->getSolde());
                     break;
-                case "formRecharger";
+                case "formRecharger":
                     $this->vue_compte->form_recharge_compte($_SESSION['idBuvette']);
                     break;
-                case "recharger";
+                case "recharger":
                     $this->modele_compte->recharger();
+                    break;
+                case "historique":
+                    $this->vue_compte->afficherHistorique($this->modele_compte->getCommandes(), $this->modele_compte->getTotalDepense());
+                    break;
+                case "detailCommande":
+                    $this->vue_compte->afficherDetailCommande($this->modele_compte->getDetailCommande($_GET['id']));
                     break;
             }
         }

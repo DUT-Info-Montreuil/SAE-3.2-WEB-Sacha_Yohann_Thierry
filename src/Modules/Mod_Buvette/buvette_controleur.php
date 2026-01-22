@@ -87,6 +87,7 @@ class buvette_controleur{
                           $_SESSION['erreur'] = 'Pas assez de produit en stock';
                           header('Location: index.php?module=buvette&action=carte&id=' . ($_POST['id_buvette']));
                           exit;
+                     }
                 }
                 break;
 
@@ -103,6 +104,7 @@ class buvette_controleur{
 
                 header('Location: index.php?module=buvette&action=carte&id=' . $_SESSION['idBuvette']);
                 exit;
+
                 break;
 
            case "nommerAdmin":

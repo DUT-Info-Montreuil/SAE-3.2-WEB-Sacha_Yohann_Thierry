@@ -178,7 +178,6 @@ class buvette_vue{
              </div>
          </div>';
      }
-
     public function barre_vendeur($clientServi = null){
         echo '<div class="card bg-dark text-white mb-4 shadow">';
         echo '<div class="card-body d-flex justify-content-between align-items-center">';
@@ -196,7 +195,6 @@ class buvette_vue{
                     <button type="submit" class="btn btn-primary">Sélectionner</button>
                   </form>';
         }
-
         echo '</div></div>';
     }
 }

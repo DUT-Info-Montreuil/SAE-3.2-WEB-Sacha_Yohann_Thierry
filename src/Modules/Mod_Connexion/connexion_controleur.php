@@ -33,7 +33,7 @@ class connexion_controleur {
                 break;
             case "deconnexion":
                 session_destroy();
-                header('Location: index.php');
+                header('Location: index.php?module=default&action=default');
                 exit;
             case "default":
                 $this->vue->messageBienvenue();

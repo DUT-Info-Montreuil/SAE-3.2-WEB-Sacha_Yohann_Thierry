@@ -197,6 +197,69 @@ class buvette_vue{
         }
         echo '</div></div>';
     }
+
+        public function messageAttenteDemande($buvette){
+            echo '
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6 text-center">
+                    <div class="alert alert-warning shadow p-4">
+                        <h3 class="mb-3">🔒 Accès restreint</h3>
+                        <p>Vous n\'êtes pas encore membre de la buvette : <strong>'.htmlspecialchars($buvette['nom']).'</strong>.</p>
+                        <hr>
+                        <p class="mb-0">✅ Une demande d\'accès a été automatiquement envoyée aux administrateurs. Veuillez patienter le temps qu\'ils valident votre compte.</p>
+                    </div>
+                    <a href="index.php?module=buvette&action=choixbuvette" class="btn btn-secondary mt-3">Retour aux buvettes</a>
+                </div>
+            </div>';
+        }
+
+    public function afficherDemandesAcces($demandes, $idBuvette){
+            if(empty($demandes)) return;
+
+            echo '
+            <div class="row justify-content-center mt-4 mb-5">
+                <div class="col-md-8">
+                    <div class="card border-warning shadow">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0">🔔 Demandes d\'accès en attente</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Login du client</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>';
+            foreach ($demandes as $demande) {
+                echo '
+                    <tr>
+                        <td><strong>' . htmlspecialchars($demande['login']) . '</strong></td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <form method="POST" action="index.php?module=buvette&action=validerAcces">
+                                    <input type="hidden" name="id_utilisateur_cible" value="'.$demande['id_utilisateur'].'">
+                                    <input type="hidden" name="id_buvette" value="'.$idBuvette.'">
+                                    <button type="submit" class="btn btn-success btn-sm">✅ Accepter</button>
+                                </form>
+
+                                <form method="POST" action="index.php?module=buvette&action=refuserAcces" onsubmit="return confirm(\'Êtes-vous sûr de vouloir refuser définitivement cette demande ?\');">
+                                    <input type="hidden" name="id_utilisateur_cible" value="'.$demande['id_utilisateur'].'">
+                                    <input type="hidden" name="id_buvette" value="'.$idBuvette.'">
+                                    <button type="submit" class="btn btn-danger btn-sm">❌ Refuser</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>';
+            }
+            echo '              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+        }
 }
 
 ?>

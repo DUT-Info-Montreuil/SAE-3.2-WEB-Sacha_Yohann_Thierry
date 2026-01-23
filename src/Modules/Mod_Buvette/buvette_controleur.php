@@ -54,6 +54,12 @@ class buvette_controleur{
                 $_SESSION['idBuvette'] = $_GET['id'];
                 $nomBuvette = $this->modele->getNomBuvettesParId($_SESSION['idBuvette']);
 
+                if (!$this->modele->possedeRole($_SESSION['id_utilisateur'], $_SESSION['idBuvette'])) {
+                    $this->modele->gererDemandeClient($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
+                    $this->vue->messageAttenteDemande($nomBuvette);
+                    break;
+                }
+
                 $estAdmin = $this->modele->estAdmin($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
                 $estBarman = $this->modele->estBarman($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
 
@@ -73,6 +79,9 @@ class buvette_controleur{
                 if($estAdmin){
                     $this->vue->boutonInventaire($_SESSION['idBuvette']);
                     $this->vue->form_ajout_staff($_SESSION['idBuvette']);
+
+                    $demandes = $this->modele->getDemandesEnAttente($_SESSION['idBuvette']);
+                    $this->vue->afficherDemandesAcces($demandes, $_SESSION['idBuvette']);
                 }
                 break;
 
@@ -141,6 +150,26 @@ class buvette_controleur{
            case "annulerSelection":
                unset($_SESSION['client_servi']);
                header('Location: index.php?module=buvette&action=carte&id=' . $_SESSION['idBuvette']);
+               break;
+
+           case "validerAcces":
+               if(isset($_POST['id_utilisateur_cible']) && isset($_POST['id_buvette'])){
+                   if($this->modele->estAdmin($_SESSION['id_utilisateur'], $_POST['id_buvette'])){
+                       $this->modele->validerDemande($_POST['id_utilisateur_cible'], $_POST['id_buvette']);
+                       echo "<script>alert('Le client a été accepté avec succès !');</script>";
+                   }
+                   header("Location: index.php?module=buvette&action=carte&id=" . $_POST['id_buvette']);
+               }
+               break;
+
+           case "refuserAcces":
+               if(isset($_POST['id_utilisateur_cible']) && isset($_POST['id_buvette'])){
+                   if($this->modele->estAdmin($_SESSION['id_utilisateur'], $_POST['id_buvette'])){
+                       $this->modele->refuserDemande($_POST['id_utilisateur_cible'], $_POST['id_buvette']);
+                       echo "<script>alert('La demande a été refusée et supprimée.');</script>";
+                   }
+                   header("Location: index.php?module=buvette&action=carte&id=" . $_POST['id_buvette']);
+               }
                break;
         }
     }

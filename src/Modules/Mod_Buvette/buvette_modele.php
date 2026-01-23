@@ -290,6 +290,44 @@ class buvette_modele extends Connexion{
             $sql->execute([$login]);
             return $sql->fetch(PDO::FETCH_ASSOC);
         }
+
+        public function possedeRole($idUtilisateur, $idBuvette){
+            $sql = self::$bdd->prepare('SELECT * FROM A_role WHERE id_utilisateur = ? AND id_buvette = ?');
+            $sql->execute([$idUtilisateur, $idBuvette]);
+            return $sql->fetch(PDO::FETCH_ASSOC) !== false;
+        }
+
+        public function gererDemandeClient($idUtilisateur, $idBuvette){
+            $verif = self::$bdd->prepare('SELECT * FROM Demande_Role WHERE id_utilisateur = ? AND id_buvette = ?');
+            $verif->execute([$idUtilisateur, $idBuvette]);
+
+            if (!$verif->fetch()) {
+                $insert = self::$bdd->prepare('INSERT INTO Demande_Role (id_utilisateur, id_buvette) VALUES (?, ?)');
+                $insert->execute([$idUtilisateur, $idBuvette]);
+            }
+        }
+
+        public function getDemandesEnAttente($idBuvette){
+            $sql = self::$bdd->prepare('SELECT d.id_utilisateur, c.login
+                                        FROM Demande_Role d
+                                        INNER JOIN Compte c ON d.id_utilisateur = c.id_utilisateur
+                                        WHERE d.id_buvette = ? AND d.statut = "en_attente"');
+            $sql->execute([$idBuvette]);
+            return $sql->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function validerDemande($idUtilisateur, $idBuvette){
+            $del = self::$bdd->prepare('DELETE FROM Demande_Role WHERE id_utilisateur = ? AND id_buvette = ?');
+            $del->execute([$idUtilisateur, $idBuvette]);
+
+            $insert = self::$bdd->prepare('INSERT INTO A_role (id_buvette, id_utilisateur, role) VALUES (?, ?, "client")');
+            $insert->execute([$idBuvette, $idUtilisateur]);
+        }
+
+        public function refuserDemande($idUtilisateur, $idBuvette){
+            $del = self::$bdd->prepare('DELETE FROM Demande_Role WHERE id_utilisateur = ? AND id_buvette = ?');
+            $del->execute([$idUtilisateur, $idBuvette]);
+        }
 }
 
 ?>

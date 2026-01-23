@@ -18,7 +18,7 @@ class cmd_panier_vue{
         <form method = "POST" action="index.php?module=buvette&action=carte&id='.$idbuvette.'">
              <button class="btn btn-primary btn-lg rounded-pill">
                 Retour
-            </button>
+             </button>
         </form><br>
 
         <h2 class="border-bottom pb-2 mb-4">Mon panier</h2>';

@@ -7,10 +7,20 @@ class buvette_vue{
 
    public function choixBuvette($buvettes){
        echo '<div class="text-center mb-4"><h2>Sélectionnez votre Buvette</h2></div>';
-       echo '<div class="list-group shadow-sm">';
-       echo '<a href="index.php?module=buvette&action=formAjoutBuvette">Créer une buvette</a>';
-       echo '<a href="index.php?module=fournisseur&action=formFournisseur">Ajouter un fournisseur</a>';
 
+       echo '<a href="index.php?module=buvette&action=formAjoutBuvette"
+                class="btn btn-custom rounded-pill" style=" background-color:#ffc0cb; color:black; border:none;
+                transition: background-color 0.2s ease-in-out;
+                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                Créer une buvette</a>';
+
+       echo '<a href="index.php?module=fournisseur&action=formFournisseur"
+                class="btn btn-custom rounded-pill" style="margin-left: 15px; background-color:#ffc0cb; color:black; border:none;
+                transition: background-color 0.2s ease-in-out;
+                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                Ajouter un fournisseur</a><br><br>';
+
+       echo '<div class="list-group shadow-sm">';
        foreach($buvettes as $buvette){
            echo '<a href="index.php?module=buvette&action=carte&id=' . $buvette['id'] . '"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -86,7 +96,11 @@ class buvette_vue{
    }
 
     public function boutonInventaire($idInventaire){
-        echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"> Inventaire </a><br>';
+        echo '<a href="index.php?&module=inventaire&id=' . $idInventaire . '"
+                class="btn btn-custom rounded-pill" style=" background-color:#ffc0cb; color:black; border:none;
+                transition: background-color 0.2s ease-in-out;
+                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                 Inventaire </a><br>';
     }
 
     public function titreBienvenue($idCompteEtSolde,$buvette){
@@ -96,11 +110,19 @@ class buvette_vue{
 
     public function afficherEtRechargerSolde($idCompteEtSolde){
         echo "<p>Votre solde actuel : " . $idCompteEtSolde['solde'] . " €</p>";
-        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '">Recharger mon solde</a><br><br>';
+        echo '<a href="index.php?module=compte&action=formRecharger&id=' . $idCompteEtSolde['id_compte'] . '"
+                class="btn btn-custom rounded-pill" style=" background-color:#ffc0cb; color:black; border:none;
+                transition: background-color 0.2s ease-in-out;
+                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                Recharger mon solde</a><br><br>';
     }
 
     public function afficherPanier(){
-        echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a><br>';
+        echo '<a href="index.php?module=panier&action=panier" 
+                class="btn btn-custom rounded-pill" style=" margin-bottom: 15px; background-color:#ffc0cb; color:black; border:none;
+                transition: background-color 0.2s ease-in-out;
+                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                Voir mon panier</a><br>';
     }
 
     public function formAjoutBuvette(){

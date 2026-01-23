@@ -67,7 +67,7 @@ class buvette_modele extends Connexion{
 
         }else{
             $sql = self::$bdd->prepare("INSERT INTO Lignecommande (id_buvette,prix_total, statut, date)
-                                        VALUES ($idBuvette,0, 'en_cours', NOW())");
+                                        VALUES ($idBuvette, 0, 'en_cours', NOW())");
             $sql->execute();
 
             $sql = self::$bdd->prepare("INSERT INTO Passercommande (id_compte, id_lignecmd, date_cmd)

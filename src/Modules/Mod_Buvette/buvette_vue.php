@@ -80,14 +80,14 @@ class buvette_vue{
                             <input type="hidden" name="id_buvette" value="'. $_GET['id'] .'">
                             <button type="submit" class="btn btn-primary rounded-circle border-0 btn-sm"
                                     style="width:32px; height:32px; font-weight:bold;">+</button>
-                       </form>   
-                        
+                       </form>
+
                        <form method="POST" action="index.php?module=buvette&action=retirerProduit" style="display:inline">
                             <input type="hidden" name="id_produit" value="'. $produit['id'] .'">
                             <input type="hidden" name="id_buvette" value="'. $_GET['id'] .'">
                             <button type="submit" class="btn btn-primary rounded-circle border-0 btn-sm"
                                     style="width:32px; height:32px; font-weight:bold;">-</button>
-                       </form>                    
+                       </form>
                    </div>
                </div>
            </div>';
@@ -118,7 +118,7 @@ class buvette_vue{
     }
 
     public function afficherPanier(){
-        echo '<a href="index.php?module=panier&action=panier" 
+        echo '<a href="index.php?module=panier&action=panier"
                 class="btn btn-custom rounded-pill" style=" margin-bottom: 15px; background-color:#ffc0cb; color:black; border:none;
                 transition: background-color 0.2s ease-in-out;
                 " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
@@ -154,28 +154,30 @@ class buvette_vue{
            </div>';
        }
 
-   public function form_ajout_admin($idBuvette){
-       echo '
-       <div class="row justify-content-center mt-5 mb-5">
-           <div class="col-md-8">
-               <div class="card border-danger shadow">
-                   <div class="card-header bg-danger text-white">
-                       <h5 class="mb-0">👮 Zone Admin : Nommer un co-administrateur</h5>
-                   </div>
-                   <div class="card-body">
-                       <p>Ajouter un autre administrateur à cette buvette :</p>
-                       <form method="POST" action="index.php?module=buvette&action=nommerAdmin">
-                           <div class="input-group">
-                               <input type="text" name="login_cible" class="form-control" placeholder="Login du futur admin" required>
-                               <button class="btn btn-outline-danger" type="submit">Nommer Admin</button>
-                           </div>
-                           <input type="hidden" name="id_buvette" value="'.$idBuvette.'">
-                       </form>
-                   </div>
-               </div>
-           </div>
-       </div>';
-   }
+  public function formAjoutBuvette(){
+         echo '
+         <div class="row justify-content-center mt-5">
+             <div class="col-md-6">
+                 <div class="card shadow">
+                     <div class="card-header bg-primary text-white">
+                         <h4 class="mb-0"> Créer une nouvelle Buvette</h4>
+                     </div>
+                     <div class="card-body">
+                         <form method="POST" action="index.php?module=buvette&action=ajoutBuvette">
+                             <div class="mb-3">
+                                 <label for="nomBuvette" class="form-label">Nom de la buvette :</label>
+                                 <input type="text" class="form-control" name="nomBuvette" placeholder="Ex: Buvette du BDE" required>
+                             </div>
+                             <div class="d-grid gap-2">
+                                 <button type="submit" class="btn btn-success">Valider la création</button>
+                                 <a href="index.php?module=buvette&action=choixbuvette" class="btn btn-secondary">Annuler</a>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>';
+     }
 
     public function barre_vendeur($clientServi = null){
         echo '<div class="card bg-dark text-white mb-4 shadow">';

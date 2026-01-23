@@ -35,7 +35,18 @@ class cmd_panier_controleur{
                     $_SESSION['idBuvette']
                 );
                 break;
+
             case "validerCommande":
+                if (!isset($_SESSION['est_barman']) || $_SESSION['est_barman'] !== true) {
+                    echo "<div class='alert alert-danger text-center mt-3'>⛔ Action refusée : Vous devez être Barman pour encaisser.</div>";
+                    $this->vueCmd->monPanier(
+                        $this->modeleCmd->getProduit($idClientActuel, $_POST['id_buvette']),
+                        $this->modeleCmd->getTotalPrix($ligncmd, $_POST['id_buvette']),
+                        $_POST['id_buvette']
+                    );
+                    break;
+                }
+
                 if(isset($_POST['id_buvette'])){
                     $resultat = $this->modeleCmd->payerCommande($idClientActuel, $_POST['id_buvette']);
 

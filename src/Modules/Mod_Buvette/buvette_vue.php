@@ -103,31 +103,34 @@ class buvette_vue{
         echo '<a href="index.php?module=panier&action=panier">Voir mon panier</a><br>';
     }
 
-    public function formAjoutBuvette(){
-        echo '
-            <div class="row justify-content-center mt-4">
-                <div class="col-md-8">
-                    <div class="card shadow">
-                        <div class="card-header bg-success text-white text-center">
-                            <h3>Créer une buvette </h3>
-                        </div>
-                        <div class="card-body p-4">
-                            <form method="POST" action="index.php?module=buvette&action=ajoutBuvette">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Nom buvette :</label>
-                                        <input type="text" name="nomBuvette" class="form-control" placeholder="Ex: buvette" required>
-                                    </div>
-                                </div>
-                                <div class="d-grid gap-2">
-                                    <input type="submit" class="btn btn-success btn-lg" value="Valider l\'inscription">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-    }
+    public function form_ajout_staff($idBuvette){
+           echo '
+           <div class="row justify-content-center mt-5 mb-5">
+               <div class="col-md-8">
+                   <div class="card border-danger shadow">
+                       <div class="card-header bg-danger text-white">
+                           <h5 class="mb-0"> Gestion du Staff</h5>
+                       </div>
+                       <div class="card-body">
+                           <p>Ajouter ou modifier un membre du staff :</p>
+                           <form method="POST" action="index.php?module=buvette&action=nommerStaff">
+                               <div class="input-group">
+                                   <input type="text" name="login_cible" class="form-control" placeholder="Login utilisateur" required>
+
+                                   <select name="role" class="form-select" style="max-width: 150px;">
+                                        <option value="barman">Barman</option>
+                                        <option value="admin">Admin</option>
+                                   </select>
+
+                                   <button class="btn btn-outline-danger" type="submit">Valider</button>
+                               </div>
+                               <input type="hidden" name="id_buvette" value="'.$idBuvette.'">
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>';
+       }
 
    public function form_ajout_admin($idBuvette){
        echo '

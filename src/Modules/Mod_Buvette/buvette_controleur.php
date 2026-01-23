@@ -54,11 +54,14 @@ class buvette_controleur{
                 $_SESSION['idBuvette'] = $_GET['id'];
                 $nomBuvette = $this->modele->getNomBuvettesParId($_SESSION['idBuvette']);
 
-                $estStaff = $this->modele->estAdmin($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
+                $estAdmin = $this->modele->estAdmin($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
+                $estBarman = $this->modele->estBarman($_SESSION['id_utilisateur'], $_SESSION['idBuvette']);
+
+                $_SESSION['est_barman'] = $estBarman;
 
                 $this->vue->TitreBienvenue($idcompte,$nomBuvette);
 
-                if($estStaff){
+                if($estBarman){
                     $clientServi = isset($_SESSION['client_servi']) ? $_SESSION['client_servi'] : null;
                     $this->vue->barre_vendeur($clientServi);
                 }
@@ -67,9 +70,9 @@ class buvette_controleur{
                 $this->vue->carte($this->modele->recupProduits($_SESSION['idBuvette']));
                 $this->vue->afficherPanier();
 
-                if($estStaff){
+                if($estAdmin){
                     $this->vue->boutonInventaire($_SESSION['idBuvette']);
-                    $this->vue->form_ajout_admin($_SESSION['idBuvette']);
+                    $this->vue->form_ajout_staff($_SESSION['idBuvette']);
                 }
                 break;
 
@@ -109,18 +112,18 @@ class buvette_controleur{
 
                 break;
 
-           case "nommerAdmin":
-               if(isset($_POST['login_cible']) && isset($_POST['id_buvette'])){
-                   $message = $this->modele->nommerAdmin($_POST['login_cible'], $_POST['id_buvette']);
+           case "nommerStaff":
+              if(isset($_POST['login_cible']) && isset($_POST['id_buvette']) && isset($_POST['role'])){
+                  $message = $this->modele->nommerStaff($_POST['login_cible'], $_POST['id_buvette'], $_POST['role']);
 
-                   if($message == "Succès"){
-                       echo "<div class='alert alert-success text-center'>Nouveau rôle attribué avec succès !</div>";
-                   } else {
-                       echo "<div class='alert alert-danger text-center'>Erreur : $message</div>";
-                   }
-                   header("Refresh: 2; url=index.php?module=buvette&action=carte&id=" . $_POST['id_buvette']);
-               }
-               break;
+                  if($message == "Succès"){
+                      echo "<div class='alert alert-success text-center'>Le rôle <strong>".htmlspecialchars($_POST['role'])."</strong> a été attribué avec succès !</div>";
+                  } else {
+                      echo "<div class='alert alert-danger text-center'>Erreur : $message</div>";
+                  }
+                  header("Refresh: 2; url=index.php?module=buvette&action=carte&id=" . $_POST['id_buvette']);
+              }
+              break;
 
            case "selectionnerClient":
                if(isset($_POST['login_client'])){

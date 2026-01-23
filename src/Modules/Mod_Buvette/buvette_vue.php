@@ -11,7 +11,7 @@ class buvette_vue{
        echo '<a href="index.php?module=buvette&action=formAjoutBuvette"
                 class="btn btn-custom rounded-pill" style=" background-color:#ffc0cb; color:black; border:none;
                 transition: background-color 0.2s ease-in-out;
-                " onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
+                "onmouseover="this.style.backgroundColor=\'#e6a6b2\'" onmouseout="this.style.backgroundColor=\'#ffc0cb\'">
                 Créer une buvette</a>';
 
        echo '<a href="index.php?module=fournisseur&action=formFournisseur"

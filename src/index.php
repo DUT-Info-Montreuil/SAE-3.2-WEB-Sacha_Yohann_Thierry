@@ -14,10 +14,11 @@
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">🥤 BuvAsso</a>
             <?php if(isset($_SESSION['login'])): ?>
-            <li class="nav-item"> <span class="nav-link" style="color: lightgrey; padding: 0.5rem 1rem;">Compte : <?php echo $_SESSION['login']?></span> </li>
-            <li class="nav-item" ><a class="nav-link btn btn-outline-primary"
-                                     style="color: lightgrey; padding: 0.5rem 0.5rem;"
-                                     href="index.php?module=compte&action=solde&id=<?php echo $_SESSION['id_compte']; ?>">Votre Solde</a></li>
+            <span class="nav-link" style="color: lightgrey; padding: 0.5rem 1rem;">Compte : <?php echo $_SESSION['login']?></span>
+            <a class="nav-link btn btn-outline-primary"
+               style="color: lightgrey; padding: 0.5rem 0.5rem;"
+               href="index.php?module=compte&action=solde&id=<?php echo $_SESSION['id_compte']; ?>">Votre Solde
+            </a>
 
             <?php endif; ?>
 

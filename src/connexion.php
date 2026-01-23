@@ -9,10 +9,6 @@ class Connexion{
         $user = "dutinfopw201658";
         $password = "ravuveny";
 
-        $dsn = "mysql:host=localhost;dbname=sae2;charset=utf8";
-        $user = "root";
-        $password = "";
-
         self::$bdd = new PDO($dsn, $user, $password);
     }
 

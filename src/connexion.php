@@ -1,24 +1,17 @@
 <?php
 
-class Connexion {
+class Connexion{
     static protected $bdd;
 
-    public static function initConnexion() {
-        // Paramètres de connexion par défaut sur XAMPP
-        $user = 'root';
-        $password = ''; // Vide par défaut sur XAMPP
+    public static function initConnexion(){
 
-        try {
-            self::$bdd = new PDO('mysql:host=localhost;dbname=dutinfopw201658;charset=utf8', $user, $password);
+        $dsn = "mysql:host=database-etudiants.iut.univ-paris8.fr;dbname=dutinfopw201658;charset=utf8";
+        $user = "dutinfopw201658";
+        $password = "ravuveny";
 
-            // Il est recommandé d'ajouter ceci pour voir les erreurs SQL précises à l'avenir
-            self::$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        } catch (PDOException $e) {
-            die("Erreur de connexion : " . $e->getMessage());
-        }
+        self::$bdd = new PDO($dsn, $user, $password);
     }
-}
 
+}
 
 ?>

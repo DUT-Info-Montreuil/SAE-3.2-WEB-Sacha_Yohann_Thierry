@@ -60,7 +60,6 @@
         function unblockSite() { document.body.style.overflow = "auto"; }
 
         function showMandatoryPopup() {
-            // Vérifie s'il existe déjà
             if(document.getElementById("rgpdPopup")) return;
 
             let popup = document.createElement("div");
@@ -79,23 +78,28 @@
             setTimeout(() => popup.remove(), 3000);
         }
 
+        // Références des écouteurs pour pouvoir les enlever
+        let clickListener, scrollListener;
+
         function enforceConsent() {
             blockSite();
             modal.show();
 
-            // Évite de créer plusieurs écouteurs
             if(!window.rgpdListenerAdded) {
                 window.rgpdListenerAdded = true;
 
-                document.addEventListener("click", function(e){
+                clickListener = function(e){
                     if (!modalElement.contains(e.target)) {
                         showMandatoryPopup();
                     }
-                });
+                };
 
-                document.addEventListener("scroll", function(){
+                scrollListener = function(){
                     showMandatoryPopup();
-                });
+                };
+
+                document.addEventListener("click", clickListener);
+                document.addEventListener("scroll", scrollListener);
             }
         }
 
@@ -109,15 +113,20 @@
             localStorage.setItem("rgpdConsent", "accepted");
             unblockSite();
             modal.hide();
+
+            // Supprime les écouteurs pour que le popup n'apparaisse plus
+            document.removeEventListener("click", clickListener);
+            document.removeEventListener("scroll", scrollListener);
         });
 
         document.getElementById("rgpdRefuse").addEventListener("click", function () {
             localStorage.setItem("rgpdConsent", "refused");
-            showMandatoryPopup(); // <--- On affiche le message immédiatement
-            enforceConsent();     // <--- On bloque le site et réaffiche le modal
+            showMandatoryPopup(); // popup immédiat
+            enforceConsent();     // bloque le site et modal
         });
 
     });
+
     </script>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">

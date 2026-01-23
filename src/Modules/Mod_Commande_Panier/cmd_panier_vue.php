@@ -38,13 +38,16 @@ class cmd_panier_vue{
         echo '<div class="mt-4 p-3 bg-light border rounded text-end">
             <h5>Total à payer : '.number_format($prixtotal, 2).'€</h5>';
 
+        if(isset($_SESSION['est_barman']) && $_SESSION['est_barman'] === true) {
             echo '<form method="POST" action="index.php?module=panier&action=validerCommande">
                     <input type="hidden" name="id_buvette" value="'.$idbuvette.'">
                     <button type="submit" class="btn btn-success btn-lg mt-2">✅ Valider et Payer</button>
                   </form>';
+        }else {
+            echo '<div class="alert alert-warning mt-2 d-inline-block">
+                  Veuillez vous présenter au bar pour valider et régler votre commande.
+               </div>';
+        }
         echo '</div>';
-
-        ;
     }
-
 }

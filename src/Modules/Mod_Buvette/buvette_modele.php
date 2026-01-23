@@ -235,34 +235,44 @@ class buvette_modele extends Connexion{
         }
         header('Location: index.php?module=buvette&action=choixbuvette');
         exit;
-    }
-    public function nommerAdmin($loginCible, $idBuvette){
-
-        $sqlUser = self::$bdd->prepare('SELECT id_utilisateur FROM Compte WHERE login = ?');
-        $sqlUser->execute([$loginCible]);
-        $user = $sqlUser->fetch(PDO::FETCH_ASSOC);
-
-        if(!$user){
-            return "Utilisateur introuvable.";
         }
 
-        $idNouveauAdmin = $user['id_utilisateur'];
+       public function nommerStaff($loginCible, $idBuvette, $role){
 
-        $verif = self::$bdd->prepare('SELECT * FROM A_role WHERE id_buvette = ? AND id_utilisateur = ?');
-        $verif->execute([$idBuvette, $idNouveauAdmin]);
+               $sqlUser = self::$bdd->prepare('SELECT id_utilisateur FROM Compte WHERE login = ?');
+               $sqlUser->execute([$loginCible]);
+               $user = $sqlUser->fetch(PDO::FETCH_ASSOC);
 
-        if($verif->fetch()){
+               if(!$user){
+                   return "Utilisateur introuvable.";
+               }
 
-            $update = self::$bdd->prepare('UPDATE A_role SET role = "admin" WHERE id_buvette = ? AND id_utilisateur = ?');
-            $update->execute([$idBuvette, $idNouveauAdmin]);
-        } else {
+               $idNouveauStaff = $user['id_utilisateur'];
 
-            $insert = self::$bdd->prepare('INSERT INTO A_role (id_buvette, id_utilisateur, role) VALUES (?, ?, "admin")');
-            $insert->execute([$idBuvette, $idNouveauAdmin]);
+               $verif = self::$bdd->prepare('SELECT * FROM A_role WHERE id_buvette = ? AND id_utilisateur = ?');
+               $verif->execute([$idBuvette, $idNouveauStaff]);
+
+               if($verif->fetch()){
+                   $update = self::$bdd->prepare('UPDATE A_role SET role = ? WHERE id_buvette = ? AND id_utilisateur = ?');
+                   $update->execute([$role, $idBuvette, $idNouveauStaff]);
+               } else {
+                   $insert = self::$bdd->prepare('INSERT INTO A_role (id_buvette, id_utilisateur, role) VALUES (?, ?, ?)');
+                   $insert->execute([$idBuvette, $idNouveauStaff, $role]);
+               }
+
+               return "Succès";
+           }
+
+        public function estBarman($idUtilisateur, $idBuvette){
+           $sql = self::$bdd->prepare('SELECT role FROM A_role WHERE id_utilisateur = ? AND id_buvette = ?');
+           $sql->execute([$idUtilisateur, $idBuvette]);
+           $resultat = $sql->fetch(PDO::FETCH_ASSOC);
+
+           if($resultat && $resultat['role'] == 'barman'){
+               return true;
+           }
+           return false;
         }
-
-        return "Succès";
-    }
 
      public function estAdmin($idUtilisateur, $idBuvette){
             $sql = self::$bdd->prepare('SELECT role FROM A_role WHERE id_utilisateur = ? AND id_buvette = ?');

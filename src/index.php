@@ -10,6 +10,116 @@
     </head>
     <body class="bg-light">
 
+        <!-- RGPD Modal -->
+        <div class="modal fade" id="rgpdModal" tabindex="-1"
+             data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content shadow">
+                    <div class="modal-header">
+                        <h5 class="modal-title">🍪 Consentement RGPD</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>
+                            Ce site utilise des cookies et le stockage de session
+                            nécessaires à son fonctionnement.
+                        </p>
+
+                        <p>
+                            Ce site récupère certaines données nécéssaires comme votre nom et votre prénom
+                        </p>
+
+                        <p class="text-muted small mb-0">
+                            Sans acceptation, l'accès au site est impossible.
+                        </p>
+                    </div>
+
+                    <div class="modal-footer d-flex flex-column gap-2">
+                        <button id="rgpdAccept" class="btn btn-success w-100">
+                            Accepter
+                        </button>
+                        <button id="rgpdRefuse" class="btn btn-outline-danger w-100" >
+                            Refuser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const modalElement = document.getElementById("rgpdModal");
+        const modal = new bootstrap.Modal(modalElement, {
+            backdrop: "static",
+            keyboard: false
+        });
+
+        function blockSite() { document.body.style.overflow = "hidden"; }
+        function unblockSite() { document.body.style.overflow = "auto"; }
+
+        function showMandatoryPopup() {
+            // Vérifie s'il existe déjà
+            if(document.getElementById("rgpdPopup")) return;
+
+            let popup = document.createElement("div");
+            popup.id = "rgpdPopup";
+            popup.innerText = "⚠️ Vous devez accepter les cookies pour accéder au site !";
+            popup.style.position = "fixed";
+            popup.style.top = "20px";
+            popup.style.left = "50%";
+            popup.style.transform = "translateX(-50%)";
+            popup.style.backgroundColor = "#dc3545";
+            popup.style.color = "white";
+            popup.style.padding = "10px 20px";
+            popup.style.borderRadius = "8px";
+            popup.style.zIndex = "2000";
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 3000);
+        }
+
+        function enforceConsent() {
+            blockSite();
+            modal.show();
+
+            // Évite de créer plusieurs écouteurs
+            if(!window.rgpdListenerAdded) {
+                window.rgpdListenerAdded = true;
+
+                document.addEventListener("click", function(e){
+                    if (!modalElement.contains(e.target)) {
+                        showMandatoryPopup();
+                    }
+                });
+
+                document.addEventListener("scroll", function(){
+                    showMandatoryPopup();
+                });
+            }
+        }
+
+        const consent = localStorage.getItem("rgpdConsent");
+
+        if (!consent || consent === "refused") {
+            enforceConsent();
+        }
+
+        document.getElementById("rgpdAccept").addEventListener("click", function () {
+            localStorage.setItem("rgpdConsent", "accepted");
+            unblockSite();
+            modal.hide();
+        });
+
+        document.getElementById("rgpdRefuse").addEventListener("click", function () {
+            localStorage.setItem("rgpdConsent", "refused");
+            showMandatoryPopup(); // <--- On affiche le message immédiatement
+            enforceConsent();     // <--- On bloque le site et réaffiche le modal
+        });
+
+    });
+    </script>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">🥤 BuvAsso</a>
